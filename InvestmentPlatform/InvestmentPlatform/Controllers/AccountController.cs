@@ -142,6 +142,18 @@ namespace InvestmentPlatform.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult InvestorRegister()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult AuthorRegister()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]

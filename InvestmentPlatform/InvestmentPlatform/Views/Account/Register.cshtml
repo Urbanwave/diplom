@@ -1,40 +1,24 @@
-﻿@model InvestmentPlatform.Models.RegisterViewModel
-@{
+﻿@{
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @*<h4>Create a new account.</h4>*@
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+<h2 class="header-page">SIGN UP</h2>
+<div class="header-separator"></div>
+<br />
+<br />
+<br />
+<div class="registration-page">
+    <a href="@Url.Action("AuthorRegister", "Account")" class="register-block-link left-register-block col-md-5">
+        <div>
+            <h4>Author</h4>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    </a>
+    <a href="@Url.Action("InvestorRegister", "Account")" class="register-block-link right-register-block col-md-5">
+        <div>
+            <h4>Investor</h4>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+    </a>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

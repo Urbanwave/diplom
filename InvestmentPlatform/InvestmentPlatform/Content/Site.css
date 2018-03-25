@@ -22,3 +22,127 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.register-block-link {
+    display: block;
+}
+
+.register-block-link div {
+    border: 1px solid #3D5975;
+    height: 200px;
+    padding: 20px;
+}
+
+.register-block-link div:hover {
+    background-color: rgba(247, 247, 247, 1);
+}
+
+
+.registration-page a {
+    text-decoration: none;
+}
+
+.registration-form {
+    border: 1px solid #3D5975;
+}
+
+.registration-form-inputs {
+    padding: 20px;
+}
+
+.registration-form-inputs input, textarea {
+    max-width: unset;
+}
+
+.registration-form-inputs textarea {
+   min-height: 100px;
+}
+
+.registration-form-inputs label {
+    color: #3B3A3A;
+    font-weight: 300;
+}
+
+.registration-button-block {
+    margin: auto;
+    height: 45px;
+    padding: 5px;
+}
+
+.registration-button-block input {
+    background-color: #3D5975;
+    color: rgba(237, 205, 31, 1);
+    border: none;
+    padding: 10px 25px 10px 25px;
+    font-size: 18px;
+    margin: auto;
+    display: block;
+}
+
+.registration-button-block input:hover {
+    background-color: rgba(237, 205, 31, 1);
+    color: #3D5975;
+}
+
+.registration-form-required-field {
+    margin-bottom: 0px;
+}
+
+.registration-form-required-field label {
+    font-weight: 600 !important;
+    float: right;
+}
+
+@media (min-width: 768px) {
+    .registration-page {
+        width: 100%;
+        height: 300px;
+    }
+
+    .header-separator {
+        background-color: rgba(237, 205, 31, 1);
+        width: 120px;
+        height: 10px;
+        margin: auto;
+    }
+
+    .header-page {
+        text-align: center;
+        color: #C6C6C6;
+        font: normal normal normal 55px/1.4em avenir-lt-w01_85-heavy1475544,sans-serif;
+        letter-spacing: 0.05em;
+    }
+
+    .left-register-block {
+        margin-left: 80px;
+    }
+
+    .right-register-block {
+        margin-right: 80px;
+        float: right;
+    }
+}
+
+@media (max-width: 768px) {
+    .registration-page {
+        width: 100%;
+    }
+
+    .header-separator {
+        background-color: rgba(237, 205, 31, 1);
+        width: 100%;
+        height: 5px;
+        margin: auto;
+    }
+
+    .header-page {
+        text-align: center;
+        color: #C6C6C6;
+        font: normal normal normal 32px/1.4em avenir-lt-w01_85-heavy1475544,sans-serif;
+        letter-spacing: 0.05em;
+    }
+
+    .right-register-block {
+        margin-top: 30px;
+    }
+}
