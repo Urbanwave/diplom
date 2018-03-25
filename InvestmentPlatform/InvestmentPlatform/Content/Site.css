@@ -93,6 +93,10 @@ textarea {
     float: right;
 }
 
+.login-margin {
+    margin-left: 21%;
+}
+
 @media (min-width: 768px) {
     .registration-page {
         width: 100%;
@@ -122,6 +126,8 @@ textarea {
         float: right;
     }
 }
+
+
 
 @media (max-width: 768px) {
     .registration-page {

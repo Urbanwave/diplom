@@ -49,13 +49,13 @@ namespace InvestmentPlatform.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Email:")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password:")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -110,27 +110,69 @@ namespace InvestmentPlatform.Models
         [Display(Name = "*Investment size:")]
         public string InvestmentSize { get; set; }
     }
-        
-    public class RegisterViewModel
-    {      
+
+    public class AuthorRegisterViewModel
+    {
+        [Required]
+        [Display(Name = "*First Name:")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "*Last Name:")]
+        public string LastName { get; set; }
+
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "*Email:")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "*Password:")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "*Confirm password:")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "*Job title:")]
+        public string JobTitle { get; set; }
+
+        [Display(Name = "Website:")]
+        public string Website { get; set; }
+
+        [Required]
+        [Display(Name = "*Location:")]
+        public string Location { get; set; }
+           
+        [Required]
+        [Display(Name = "*Company logo:")]
+        public string CompanyLogo  { get; set; }
     }
 
-    public class ResetPasswordViewModel
+    public class RegisterViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "*Email:")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "*Password:")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "*Confirm password:")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+    }
+        public class ResetPasswordViewModel
     {
         [Required]
         [EmailAddress]
