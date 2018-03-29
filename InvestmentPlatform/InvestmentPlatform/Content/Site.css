@@ -47,7 +47,7 @@ textarea {
 }
 
 .registration-form-inputs {
-    padding: 20px;
+    padding: 30px;
 }
 
 .registration-form-inputs input, textarea {
@@ -66,7 +66,7 @@ textarea {
 .registration-button-block {
     margin: auto;
     height: 45px;
-    padding: 5px;
+    
 }
 
 .registration-button-block input {
@@ -101,6 +101,11 @@ textarea {
     .registration-page {
         width: 100%;
         height: 300px;
+    }
+
+    .login-form {
+        margin: auto;
+        width: 40%;
     }
 
     .header-separator {
