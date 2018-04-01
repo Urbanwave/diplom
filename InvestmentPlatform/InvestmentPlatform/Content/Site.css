@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Titillium Web', sans-serif !important;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,6 +22,69 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.navbar-style {
+    background-color: #1e2d3b;
+    z-index:99999;
+}
+
+.navbar-style a {
+    color: #FFFFFF !important;
+}
+
+.navbar-style a:hover {
+    color: rgba(237, 205, 31, 1) !important;
+}
+
+.navbar-style-header {
+    background-color: rgba(237, 205, 31, 1);
+}
+
+.navbar-style-header a{
+    color: #1e2d3b !important;
+}
+
+.navbar-style-header a:hover {
+    color: #1e2d3b !important;
+}
+
+.navbar-style-width {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.home-page-carousel {
+    margin-top: 15px;
+}
+
+.home-page-solutions-block {
+    margin:auto;
+}
+
+.home-page-solutions:hover {
+    opacity:0.7;
+}
+
+.home-page-solutions-image {
+    /*width: 300px;
+    height: 227px;*/
+}
+
+.home-page-solutions-image img {
+    width: 100%;
+    height: auto;
+}
+
+.home-page-solutions-description {
+    background-color: rgb(247, 247, 247);
+    padding: 20px;
+    color: #3B3A3A;
+}
+
+.home-page-solution-title {
+    font-size: 22px;
+    color: #3D5975;
 }
 
 .register-block-link {
@@ -98,6 +162,13 @@ textarea {
 }
 
 @media (min-width: 768px) {
+
+    .home-page-solutions {
+        width: 33%;
+        display: inline-block;
+        padding: 15px;
+    }
+
     .registration-page {
         width: 100%;
         height: 300px;
@@ -118,7 +189,7 @@ textarea {
     .header-page {
         text-align: center;
         color: #C6C6C6;
-        font: normal normal normal 55px/1.4em avenir-lt-w01_85-heavy1475544,sans-serif;
+        font-size: 55px;
         letter-spacing: 0.05em;
     }
 
@@ -135,6 +206,12 @@ textarea {
 
 
 @media (max-width: 768px) {
+
+    .home-page-solutions {
+        width: 100%;
+        margin-top: 20px;
+    }
+
     .registration-page {
         width: 100%;
     }
