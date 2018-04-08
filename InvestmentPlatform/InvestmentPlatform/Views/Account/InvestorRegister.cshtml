@@ -28,7 +28,7 @@
             @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
                 @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-            </div>
+            </div>  
         </div>
 
         <div class="form-group">
@@ -90,7 +90,26 @@
         <div class="form-group">
             @Html.LabelFor(m => m.InvestmentSectors, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
-                @Html.TextBoxFor(m => m.InvestmentSectors, new { @class = "form-control" })
+                <div>Investment sectors<span class="show-btn">Open</span></div>
+                <div class="checkboxes-block" style="display: none">
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                    <div><input type="checkbox" />test</div>
+                </div>
+                @*@Html.TextBoxFor(m => m.InvestmentSectors, new { @class = "form-control" })*@
             </div>
         </div>
 
@@ -109,3 +128,14 @@
     </div>
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".show-btn").click(function () {
+            if ($(".checkboxes-block").css('display') == 'none') {
+                $(".checkboxes-block").show();
+            } else {
+                $(".checkboxes-block").hide();
+            }
+        });
+    });
+</script>

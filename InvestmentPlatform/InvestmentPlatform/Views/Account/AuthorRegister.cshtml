@@ -10,7 +10,7 @@
 <br />
 <br />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form" }))
+@using (Html.BeginForm("RegisterAuthor", "Account", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="registration-form-inputs">
@@ -74,16 +74,27 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Location, new { @class = "col-md-3 control-label" })
+            <label class="col-md-3 control-label">*Country:</label>
             <div class="col-md-7">
-                @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+                <select id="country" class="form-control">
+                    <option value="" disabled selected>Select Country</option>
+                </select>
+            </div>  
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">*City:</label>
+            <div class="col-md-7">
+                <select id="city" class="form-control" disabled>
+                    <option value="" disabled selected>Select City</option>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.CompanyLogo, new { @class = "col-md-3 control-label" })
+            <label class="col-md-3 control-label" for="file">*Company logo:</label>        
             <div class="col-md-7">
-                @Html.TextBoxFor(m => m.CompanyLogo, new { @class = "form-control" })
+                <input type="file" name="file" id="file" style="width: 100%; margin-top: 6px;" />          
             </div>
         </div>
 
@@ -93,4 +104,47 @@
             </div>
         </div>
     </div>
+    @Html.HiddenFor(t => t.CityId)
+}
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getJSON('/location/GetCountries', null, function (data) {
+                $.each(data, function () {
+                    $('#country').append('<option value=' +
+                        this.Id + '>' + this.Name + '</option>');
+                });              
+                $.getJSON('/location/GetCities', { countryId: $('#country').val() }, function (data) {
+                    if (data.length > 0) {
+                        $('#city').prop("disabled", false);   
+
+                        $.each(data, function () {
+                            $('#city').append('<option value=' +
+                                this.Id + '>' + this.Name + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $('#country').change(function () {
+                $('#city option').remove();
+                $('#city').append('<option value="" disabled selected>Select City</option>');
+                $.getJSON('/location/GetCities', { countryId: $('#country').val() }, function (data) {
+                    if (data.length > 0) {
+                        $('#city').prop("disabled", false);
+
+                        $.each(data, function () {
+                            $('#city').append('<option value=' +
+                                this.Id + '>' + this.Name + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $('#city').change(function () {
+                $('#CityId').val($('#city').val());
+            });
+        });
+    </script>
 }

@@ -104,26 +104,37 @@ textarea {
 }
 
 .register-block-link {
-    display: block;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .register-block-link div {
+    position: relative;
+}
+
+.register-block-link span {
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.registration-form {
     border: 1px solid #3D5975;
-    height: 200px;
-    padding: 20px;
 }
 
 .register-block-link div:hover {
     background-color: rgba(247, 247, 247, 1);
 }
 
-
-.registration-page a {
-    text-decoration: none;
+.register-block-link img{
+    width: 100%;
 }
 
-.registration-form {
-    border: 1px solid #3D5975;
+.register-block-link:hover {
+    opacity: 0.7;
 }
 
 .registration-form-inputs {
@@ -173,11 +184,38 @@ textarea {
     float: right;
 }
 
-.login-margin {
-    margin-left: 21%;
+.form-control:focus {
+    border-color: #3D5975;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #3D5975;
+}
+
+.form-control option:hover {
+    background-color: #3D5975;
+}
+
+.checkboxes-block {
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid #3D5975;
+    position: absolute;
+    z-index: 9999;
+    background: white;
+    display: block;
 }
 
 @media (min-width: 768px) {
+    .checkboxes-block {
+        width: 200px;
+    }
+
+    .left-register-block {
+        width: 30%;
+    }
+
+    .right-register-block {
+        width: 30%;
+    }
+
 
     .home-page-statistic-block {
         height: 230px;
@@ -222,16 +260,14 @@ textarea {
     }
 
     .left-register-block {
-        margin-left: 80px;
+        margin-left: 170px;
     }
 
     .right-register-block {
-        margin-right: 80px;
+        margin-right: 170px;
         float: right;
     }
 }
-
-
 
 @media (max-width: 768px) {
 
@@ -255,6 +291,10 @@ textarea {
         width: 100%;
     }
 
+    .checkboxes-block {
+        width: calc(100% - 30px);
+    }
+
     .header-separator {
         background-color: rgba(237, 205, 31, 1);
         width: 100%;
@@ -271,5 +311,31 @@ textarea {
 
     .right-register-block {
         margin-top: 30px;
+    }
+
+    .left-register-block {
+        width: 100%;
+    }
+
+    .right-register-block {
+        width: 100%;
+    }
+
+    .left-register-block {
+        margin-left: 0px !important;
+    }
+
+    .right-register-block {
+        margin-right: 0px !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .left-register-block {
+        margin-left: 100px;
+    }
+
+    .right-register-block {
+        margin-right: 100px;
     }
 }

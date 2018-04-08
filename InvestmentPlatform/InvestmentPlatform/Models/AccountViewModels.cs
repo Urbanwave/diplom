@@ -151,6 +151,9 @@ namespace InvestmentPlatform.Models
         [Required]
         [Display(Name = "*Company logo:")]
         public string CompanyLogo  { get; set; }
+
+        [Required]
+        public int CityId { get; set; }   
     }
 
     public class RegisterViewModel
