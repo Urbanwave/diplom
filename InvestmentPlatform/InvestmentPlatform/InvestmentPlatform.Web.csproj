@@ -191,13 +191,18 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804072019367_InitTables.cs" />
+    <Compile Include="Migrations\201804072019367_InitTables.Designer.cs">
+      <DependentUpon>201804072019367_InitTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EditSolutionViewModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -207,6 +212,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\signup\author.jpg" />
     <Content Include="Content\images\signup\investor.jpg" />
+    <Content Include="Content\images\signup\test123.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -267,6 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -282,6 +289,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InvestmentPlatform.Application\InvestmentPlatform.Application.csproj">
+      <Project>{1996AFA6-4971-4CB8-BFF1-384CE269CEDC}</Project>
+      <Name>InvestmentPlatform.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InvestmentPlatform.Domain\InvestmentPlatform.Domain.csproj">
+      <Project>{fb8ce767-8ca3-423d-bd2e-fcf96024f516}</Project>
+      <Name>InvestmentPlatform.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804072019367_InitTables.resx">
+      <DependentUpon>201804072019367_InitTables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

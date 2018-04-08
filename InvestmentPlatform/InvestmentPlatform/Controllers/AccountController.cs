@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InvestmentPlatform.Models;
+using InvestmentPlatform.Domain.Models;
+using InvestmentPlatform.Domain.Enums;
+using System.IO;
 
 namespace InvestmentPlatform.Controllers
 {
@@ -167,8 +170,47 @@ namespace InvestmentPlatform.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "user");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterAuthor(AuthorRegisterViewModel model, HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                var pictureName = string.Empty;
+
+                if (file != null)
+                {
+                    pictureName = Path.GetFileName(file.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Content/Images/profile"), pictureName);
+                    file.SaveAs(path);
+                }
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CityId = model.CityId, LogoFileName = pictureName };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, Role.Author.ToString());
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
