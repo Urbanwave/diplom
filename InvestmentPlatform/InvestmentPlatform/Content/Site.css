@@ -87,6 +87,22 @@ textarea {
     color: #3D5975;
 }
 
+.home-page-statistic-number {
+    height: 50%;
+    font-size: 60px;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.home-page-statistic-text {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #3D5975;
+
+}
+
 .register-block-link {
     display: block;
 }
@@ -163,6 +179,18 @@ textarea {
 
 @media (min-width: 768px) {
 
+    .home-page-statistic-block {
+        height: 230px;
+        background-color: rgba(237, 205, 31, 1);
+        padding: 30px 120px 30px 120px;
+    }
+
+    .home-page-statistic {
+        height: 100%;
+        display: inline-block;
+        width: calc(25% - 3px);
+    }
+
     .home-page-solutions {
         width: 33%;
         display: inline-block;
@@ -206,6 +234,17 @@ textarea {
 
 
 @media (max-width: 768px) {
+
+    .home-page-statistic-block {
+        height: auto;
+        background-color: rgba(237, 205, 31, 1);
+        padding: 30px;
+    }
+
+    .home-page-statistic {
+        height: 100%;
+        width: 100%;
+    }
 
     .home-page-solutions {
         width: 100%;
