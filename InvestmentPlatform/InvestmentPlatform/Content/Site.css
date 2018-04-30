@@ -175,6 +175,20 @@ textarea {
     color: #3D5975;
 }
 
+.custom-button {
+    background-color: #3D5975;
+    color: rgba(237, 205, 31, 1);
+    border: none;
+    padding: 4.2px 20px 4.2px 20px;
+    font-size: 18px;
+    display: block;
+}
+
+.custom-button:hover {
+    background-color: rgba(237, 205, 31, 1);
+    color: #3D5975;
+}
+
 .registration-form-required-field {
     margin-bottom: 0px;
 }
@@ -201,6 +215,43 @@ textarea {
     z-index: 9999;
     background: white;
     display: block;
+}
+
+.list-name-solution {
+    display: inline-block;
+    vertical-align: top;
+    width: 110px;
+}
+
+.list-block-solution {
+    display: inline-block;
+}
+
+.block-text-solution {
+    width: 60%;
+    display: inline-block;
+}
+
+.image-solution {
+    display: inline-block;
+    width: 39%;
+    vertical-align: top;
+}
+
+.image-solution img {
+    width: 100%;
+}
+
+.location-solution {
+    font-size: 20px;
+}
+
+.font-solution {
+    font-size: 16px;
+}
+
+.bold-font {
+    font-weight: 600;
 }
 
 @media (min-width: 768px) {
@@ -257,8 +308,28 @@ textarea {
         color: #C6C6C6;
         font-size: 55px;
         letter-spacing: 0.05em;
+        margin-top: 45px;
     }
 
+    .header-page-solution { 
+        color: #C6C6C6;
+        font-size: 55px;
+        letter-spacing: 0.05em;
+        margin-top: 45px;
+    }
+
+    .header-separator-solution {
+        background-color: rgba(237, 205, 31, 1);
+        width: 120px;
+        height: 10px; 
+    }
+
+    .header-block-solution {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: #f7f7f7;
+    }
+    
     .left-register-block {
         margin-left: 170px;
     }
@@ -266,6 +337,21 @@ textarea {
     .right-register-block {
         margin-right: 170px;
         float: right;
+    }
+
+    .search-parameters-row {
+        height: 34px;
+        width: 840px;
+        margin: auto;
+    }
+
+    .search-parameters-row select {
+        width: 32%;
+    }
+
+    .search-parameters-row select:nth-child(2) {
+        margin-left: 1.5%;
+        margin-right: 1.5%;
     }
 }
 
@@ -307,6 +393,18 @@ textarea {
         color: #C6C6C6;
         font: normal normal normal 32px/1.4em avenir-lt-w01_85-heavy1475544,sans-serif;
         letter-spacing: 0.05em;
+    }
+
+    .header-page-solution {
+        color: #C6C6C6;
+        font: normal normal normal 32px/1.4em avenir-lt-w01_85-heavy1475544,sans-serif;
+        letter-spacing: 0.05em;
+    }
+
+    .header-separator-solution {
+        background-color: rgba(237, 205, 31, 1);
+        width: 100%;
+        height: 5px;
     }
 
     .right-register-block {

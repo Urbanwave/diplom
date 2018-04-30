@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">SOLUTIONS</h2>
+<div class="header-separator"></div>
+<br />
+<br />
+<br />
+
+<div class="search-block-solutions">
+    <div class="search-parameters-row">
+        <div class="">
+            <select class=""></select>
+            <select class=""></select>
+            <select class=""></select>
+        </div>
+    </div>
+    <div class="search-parameters-row">
+        <div class="">
+            <select class=""></select>
+            <select class=""></select>
+            <select class=""></select>
+        </div>
+    </div>
+    <div class="search-parameters-row">
+        <div>
+            <input class="form-control col-md-4" />
+            <input class="custom-button" type="submit" value="Find" />
+        </div>
+    </div>
+</div>
+<div class="home-page-solutions-block">
+    @for (int i = 0; i < 3; i++)
+    {
+        <a href="#">
+            <div class="home-page-solutions">
+                <div class="home-page-solutions-image">
+                    <img src="~/Content/images/homepage/ny1.jpg">
+                </div>
+
+                <div class="home-page-solutions-description">
+                    <p class="home-page-solution-title">
+                        Solution title
+                    </p>
+                    <p>
+                        I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.
+                    </p>
+                </div>
+            </div>
+        </a>
+    }
+</div>

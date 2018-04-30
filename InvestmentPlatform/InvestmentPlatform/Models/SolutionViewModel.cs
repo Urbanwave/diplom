@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvestmentPlatform.Models
 {
-    public class EditSolutionViewModel
+    public class SolutionViewModel
     {
         [Required]
         [Display(Name = "*Solution title:")]

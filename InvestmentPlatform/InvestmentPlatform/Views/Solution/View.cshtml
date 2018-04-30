@@ -1,0 +1,84 @@
+﻿@model InvestmentPlatform.Models.SolutionViewModel
+@{
+    ViewBag.Title = "Solution";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header-block-solution">
+    <div>
+        <h2 class="header-page-solution">@Model.Title</h2>
+        <div class="header-separator-solution"></div>
+    </div>
+</div>
+
+<br />
+<br />
+
+
+<div class="block-text-solution">
+    <p class="location-solution">
+        @Model.Location
+    </p>
+
+    <div class="font-solution">
+        <p>
+            <span class="bold-font">Description:</span>
+            @Model.SolutionDescription
+        </p>
+
+        @if (!string.IsNullOrEmpty(Model.UniqueInfo))
+        {
+            <p>
+                <span class="bold-font">Something unique:</span>
+                @Model.UniqueInfo
+            </p>
+        }
+
+        <div>
+            <p class="list-name-solution">
+                <span class="bold-font">Kind of solution:</span>
+            </p>
+            <div class="list-block-solution">
+                <p>
+                    test kind
+                </p>
+                <p>
+                    test 2
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <p class="list-name-solution">
+                <span class="bold-font">Industry:</span>
+            </p>
+            <div class="list-block-solution">
+                <p>
+                    test industry 1
+                </p>
+                <p>
+                    test industry 2
+                </p>
+            </div>
+        </div>
+
+        <p>
+            <span class="bold-font">Project implementation status:</span>
+            @Model.ImplementationStatus
+        </p>
+
+        <p>
+            <span class="bold-font">The total cost of the project:</span>
+            @Model.TotalCost
+        </p>
+
+        <p>
+            <span class="bold-font">Investment size:</span>
+            @Model.InvestmentSize
+        </p>
+    </div>
+</div>
+
+<div class="image-solution">
+    <img src="~/Content/images/homepage/pic1.jpg">
+</div>
