@@ -64,20 +64,20 @@ namespace InvestmentPlatform.Models
 
     public class InvestorRegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "First Name is required")]
         [Display(Name = "*First Name:")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last Name is required")]
         [Display(Name = "*Last Name:")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         [Display(Name = "*Email:")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "*Password:")]
@@ -88,45 +88,45 @@ namespace InvestmentPlatform.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company name is required")]
         [Display(Name = "*Company name:")]
         public string CompanyName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company description is required")]
         [Display(Name = "*Company description:")]
         public string CompanyDescription { get; set; }
 
         [Display(Name = "Website:")]
         public string Website { get; set; }
 
-        [Display(Name = "Location:")]
-        public string Location { get; set; }
-
         [Required]
+        public int CityId { get; set; }
+
+        //[Required]
         [Display(Name = "*Priority investment sectors:")]
         public string InvestmentSectors { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Investment size is required")]
         [Display(Name = "*Investment size:")]
         public string InvestmentSize { get; set; }
     }
 
     public class AuthorRegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "First Name is required")]
         [Display(Name = "*First Name:")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last Name is required")]
         [Display(Name = "*Last Name:")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         [Display(Name = "*Email:")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "*Password:")]
@@ -137,20 +137,12 @@ namespace InvestmentPlatform.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Job Title is required")]
         [Display(Name = "*Job title:")]
         public string JobTitle { get; set; }
 
         [Display(Name = "Website:")]
         public string Website { get; set; }
-
-        [Required]
-        [Display(Name = "*Location:")]
-        public string Location { get; set; }
-           
-        [Required]
-        [Display(Name = "*Company logo:")]
-        public string CompanyLogo  { get; set; }
 
         [Required]
         public int CityId { get; set; }   

@@ -10,11 +10,11 @@
 <br />
 <br />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form" }))
+@using (Html.BeginForm("RegisterInvestor", "Account", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="registration-form-inputs">
-        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger validation-summary" })
 
         <div class="form-group registration-form-required-field">
             <div class="col-md-10">
@@ -24,6 +24,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -31,6 +32,7 @@
             </div>  
         </div>
 
+        @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -38,6 +40,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -45,6 +48,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -52,6 +56,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -59,6 +64,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.CompanyName, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -66,6 +72,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.CompanyDescription, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.CompanyDescription, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -81,9 +88,20 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Location, new { @class = "col-md-3 control-label" })
+            <label class="col-md-3 control-label">*Country:</label>
             <div class="col-md-7">
-                @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+                <select id="country" class="form-control">
+                    <option value="" disabled selected>Select Country</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">*City:</label>
+            <div class="col-md-7">
+                <select id="city" class="form-control" disabled>
+                    <option value="" disabled selected>Select City</option>
+                </select>
             </div>
         </div>
 
@@ -102,17 +120,12 @@
                     <div><input type="checkbox" />test</div>
                     <div><input type="checkbox" />test</div>
                     <div><input type="checkbox" />test</div>
-                    <div><input type="checkbox" />test</div>
-                    <div><input type="checkbox" />test</div>
-                    <div><input type="checkbox" />test</div>
-                    <div><input type="checkbox" />test</div>
-                    <div><input type="checkbox" />test</div>
-                    <div><input type="checkbox" />test</div>
                 </div>
                 @*@Html.TextBoxFor(m => m.InvestmentSectors, new { @class = "form-control" })*@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.InvestmentSize, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.InvestmentSize, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -139,3 +152,5 @@
         });
     });
 </script>
+
+@Scripts.Render("~/bundles/location")

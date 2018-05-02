@@ -29,5 +29,11 @@ namespace InvestmentPlatform.Controllers
             var cities = locationService.GetCitiesByCountryId(countryId);
             return Json(cities, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetCountryIdByCityId(int cityId)
+        {
+            var countryId = locationService.GetCountryIdByCityId(cityId);
+            return Json(countryId, JsonRequestBehavior.AllowGet);
+        }
     }
 }

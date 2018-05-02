@@ -267,6 +267,20 @@ textarea {
         margin-right: 170px;
         float: right;
     }
+
+    .error-text {
+        margin-left: calc(25% + 12px);
+        display: block;
+    }
+
+    .validation-summary {
+        margin-left: calc(25% + 12px);
+    }
+
+    .validation-summary ul {
+        list-style-type: none;
+        padding: 0
+    }
 }
 
 @media (max-width: 768px) {
@@ -328,6 +342,15 @@ textarea {
     .right-register-block {
         margin-right: 0px !important;
     }
+
+    .error-text {
+        display: block;
+    }
+
+    .validation-summary ul {
+        list-style-type: none;
+        padding: 0
+    }
 }
 
 @media (max-width: 1024px) {
@@ -337,5 +360,14 @@ textarea {
 
     .right-register-block {
         margin-right: 100px;
+    }
+
+    .error-text {
+        margin-left: 0;
+        display: block;
+    }
+
+    .validation-summary {
+        margin-left:  0;
     }
 }

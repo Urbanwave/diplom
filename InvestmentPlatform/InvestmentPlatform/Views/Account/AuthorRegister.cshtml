@@ -14,7 +14,7 @@
 {
     @Html.AntiForgeryToken()
     <div class="registration-form-inputs">
-        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger validation-summary" })
 
         <div class="form-group registration-form-required-field">
             <div class="col-md-10">
@@ -24,6 +24,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -31,6 +32,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -38,6 +40,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -45,6 +48,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -52,6 +56,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -59,6 +64,7 @@
             </div>
         </div>
 
+        @Html.ValidationMessageFor(m => m.JobTitle, null, new { @class = "text-danger error-text" })
         <div class="form-group">
             @Html.LabelFor(m => m.JobTitle, new { @class = "col-md-3 control-label" })
             <div class="col-md-7">
@@ -107,44 +113,4 @@
     @Html.HiddenFor(t => t.CityId)
 }
 
-@section scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $.getJSON('/location/GetCountries', null, function (data) {
-                $.each(data, function () {
-                    $('#country').append('<option value=' +
-                        this.Id + '>' + this.Name + '</option>');
-                });              
-                $.getJSON('/location/GetCities', { countryId: $('#country').val() }, function (data) {
-                    if (data.length > 0) {
-                        $('#city').prop("disabled", false);   
-
-                        $.each(data, function () {
-                            $('#city').append('<option value=' +
-                                this.Id + '>' + this.Name + '</option>');
-                        });
-                    }
-                });
-            });
-
-            $('#country').change(function () {
-                $('#city option').remove();
-                $('#city').append('<option value="" disabled selected>Select City</option>');
-                $.getJSON('/location/GetCities', { countryId: $('#country').val() }, function (data) {
-                    if (data.length > 0) {
-                        $('#city').prop("disabled", false);
-
-                        $.each(data, function () {
-                            $('#city').append('<option value=' +
-                                this.Id + '>' + this.Name + '</option>');
-                        });
-                    }
-                });
-            });
-
-            $('#city').change(function () {
-                $('#CityId').val($('#city').val());
-            });
-        });
-    </script>
-}
+@Scripts.Render("~/bundles/location")
