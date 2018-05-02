@@ -412,7 +412,6 @@ textarea {
         width: 86%;
         margin: auto;
     }
-}
 
     .error-text {
         margin-left: calc(25% + 12px);
@@ -525,7 +524,6 @@ textarea {
         list-style-type: none;
         padding: 0
     }
-}
 
     .custom-button {
         width: 40%;

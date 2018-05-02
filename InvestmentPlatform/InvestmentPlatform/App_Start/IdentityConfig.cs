@@ -10,7 +10,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using InvestmentPlatform.Models;
 using InvestmentPlatform.Domain.Models;
 
 namespace InvestmentPlatform
