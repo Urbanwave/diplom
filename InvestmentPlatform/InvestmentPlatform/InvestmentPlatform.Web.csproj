@@ -275,6 +275,8 @@
     <Content Include="Views\Account\InvestorRegister.cshtml" />
     <Content Include="Views\Account\AuthorRegister.cshtml" />
     <Content Include="Views\Home\AddSolution.cshtml" />
+    <Content Include="Views\Solution\View.cshtml" />
+    <Content Include="Views\Solution\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
