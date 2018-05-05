@@ -25,5 +25,7 @@ namespace InvestmentPlatform.Domain.Models
         public int CityId { get; set; }
 
         public City City { get; set; }
+
+        public List<Industry> Industries { get; set; }
     }
 }

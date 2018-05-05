@@ -22,5 +22,10 @@ namespace InvestmentPlatform.Domain.Models
 
         public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<ImplementationStatus> ImplementationStatuses { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<Solution> Solutions { get; set; }
+        public DbSet<SolutionType> SolutionTypes { get; set; }
     }
 }

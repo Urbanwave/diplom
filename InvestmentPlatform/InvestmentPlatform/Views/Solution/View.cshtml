@@ -16,9 +16,9 @@
 
 
 <div class="block-text-solution">
-    <p class="location-solution">
+    @*<p class="location-solution">
         @Model.Location
-    </p>
+    </p>*@
 
     <div class="font-solution">
         <p>
@@ -62,19 +62,14 @@
             </div>
         </div>
 
-        <p>
+        @*<p>
             <span class="bold-font">Project implementation status:</span>
             @Model.ImplementationStatus
-        </p>
-
-        <p>
-            <span class="bold-font">The total cost of the project:</span>
-            @Model.TotalCost
-        </p>
+        </p>*@
 
         <p>
             <span class="bold-font">Investment size:</span>
-            @Model.InvestmentSize
+            @Model.FromInvestmentSize - @Model.ToInvestmentSize             
         </p>
     </div>
 </div>

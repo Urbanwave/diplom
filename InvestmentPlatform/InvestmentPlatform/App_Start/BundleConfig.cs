@@ -30,6 +30,9 @@ namespace InvestmentPlatform
 
             bundles.Add(new StyleBundle("~/bundles/location").Include(
                       "~/Scripts/Location.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/type").Include(
+                     "~/Scripts/Types.js"));
         }
     }
 }

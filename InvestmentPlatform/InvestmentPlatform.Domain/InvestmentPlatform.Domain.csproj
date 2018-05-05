@@ -56,8 +56,14 @@
     <Compile Include="Enums\Role.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\BaseType.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\ImplementationStatus.cs" />
+    <Compile Include="Models\Industry.cs" />
+    <Compile Include="Models\Solution.cs" />
+    <Compile Include="Models\SolutionType.cs" />
+    <Compile Include="Models\Currency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +71,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SqlScripts\AddTypes.sql" />
     <Content Include="SqlScripts\AddCountriesAndCities.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

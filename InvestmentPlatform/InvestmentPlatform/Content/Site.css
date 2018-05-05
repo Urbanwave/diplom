@@ -298,6 +298,17 @@ textarea {
 }
 
 @media (min-width: 768px) {
+
+    .inv-size-input{
+        width: 25% !important;
+        display: inline-block;
+    }
+
+    .inv-size-label {
+        width: calc(12.5% - 48px) !important;
+        display: inline-block;
+    } 
+
     .checkboxes-block {
         width: 200px;
     }

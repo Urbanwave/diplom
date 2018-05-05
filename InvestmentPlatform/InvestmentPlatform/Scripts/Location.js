@@ -6,7 +6,7 @@
         });
 
         var cityId = $('#CityId').val();
-        if ((cityId != '') && (cityId != null)) {
+        if ((cityId != '') && (cityId != null) && (cityId != "0")) {
             $.getJSON('/location/GetCountryIdByCityId', { cityId: $('#CityId').val() }, function (data) {
                 $('#country').val(data)
 

@@ -26,10 +26,5 @@ namespace InvestmentPlatform.Controllers
 
             return View();
         }
-        
-        public ActionResult AddSolution()
-        {
-            return View();
-        }
     }
 }
