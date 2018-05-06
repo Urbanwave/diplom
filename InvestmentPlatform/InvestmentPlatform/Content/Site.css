@@ -54,6 +54,9 @@ textarea {
     padding-bottom: 8px !important;
 }
 
+.navbar-logo {
+    margin: unset !important;
+}
 .home-page-carousel {
     margin-top: 15px;
 }
