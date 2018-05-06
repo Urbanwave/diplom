@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using InvestmentPlatform.Domain.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace InvestmentPlatform.Models
@@ -102,9 +103,9 @@ namespace InvestmentPlatform.Models
         [Required]
         public int CityId { get; set; }
 
-        //[Required]
-        [Display(Name = "*Priority investment sectors:")]
-        public string InvestmentSectors { get; set; }
+        public List<Industry> InvestmentSectors { get; set; }
+
+        public List<int> SelectedInvestmentSectors { get; set; }
 
         [Required(ErrorMessage = "Investment size is required")]
         [Display(Name = "*Investment size:")]

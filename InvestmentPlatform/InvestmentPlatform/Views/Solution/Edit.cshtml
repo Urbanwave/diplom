@@ -10,7 +10,7 @@
 <br />
 <br />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form" }))
+@using (Html.BeginForm("Save", "Solution", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="registration-form-inputs">
@@ -76,9 +76,21 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Industry, new { @class = "col-md-3 control-label" })
+            <label class="col-md-3 control-label">*Industry:</label>
             <div class="col-md-7">
-                @Html.TextBoxFor(m => m.Industry, new { @class = "form-control" })
+                <div class="sectors-dropdown">Select Industries</div>
+                <div class="checkboxes-block" style="display: none">
+                @foreach (var item in Model.Industries)
+                {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="SelectedIndustries"
+                                       value="@item.Id" /> @item.Name
+                                </label>
+                            </div>
+                }
+                </div>
             </div>
         </div>
 
@@ -91,21 +103,10 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(m => m.TotalCost, new { @class = "col-md-3 control-label" })
-            <div class="col-md-7">
-                @Html.TextBoxFor(m => m.TotalCost, new { @class = "form-control" })
-            </div>
-        </div>*@
-
         <div class="form-group">
             <label class="col-md-3 control-label">*Investment Size:</label>
             <div class="col-md-7">
-                <span class="inv-size-label">From</span>
-                @Html.TextBoxFor(m => m.FromInvestmentSize, new { @class = "form-control inv-size-input", @type = "number" })
-                <span class="inv-size-label">To</span>
-                @Html.TextBoxFor(m => m.ToInvestmentSize, new { @class = "form-control inv-size-input", @type = "number" })
-
+                @Html.TextBoxFor(m => m.InvestmentSize, new { @class = "form-control inv-size-input", @type = "number", @min = "0" })
                 <select id="currency" class="form-control inv-size-input">
                     <option value="" disabled selected>Select Currency</option>
                 </select>
@@ -136,6 +137,18 @@
     @Html.HiddenFor(t => t.ImplementationStatusId)
     @Html.HiddenFor(t => t.CurrencyId)
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".sectors-dropdown").click(function () {
+            if ($(".checkboxes-block").css('display') == 'none') {
+                $(".checkboxes-block").show();
+            } else {
+                $(".checkboxes-block").hide();
+            }
+        });
+    });
+</script>
 
 @Scripts.Render("~/bundles/location")
 @Scripts.Render("~/bundles/type")

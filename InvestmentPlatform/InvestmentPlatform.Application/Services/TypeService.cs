@@ -31,5 +31,20 @@ namespace InvestmentPlatform.Application.Services
         {
             return db.Currencies.ToList();
         }
+
+        public List<Industry> GetAllIndustries()
+        {
+            return db.Industries.ToList();
+        }
+
+        public List<SolutionType> GetSolutionTypesByIds(List<int> ids)
+        {
+            return db.SolutionTypes.Where(x => ids.Contains(x.Id)).ToList();
+        }
+
+        public List<Industry> GetIndustriesByIds(List<int> ids)
+        {
+            return db.Industries.Where(x => ids.Contains(x.Id)).ToList();
+        }
     }
 }

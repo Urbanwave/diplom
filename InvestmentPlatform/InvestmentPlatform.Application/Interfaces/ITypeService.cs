@@ -14,5 +14,11 @@ namespace InvestmentPlatform.Application.Interfaces
         List<ImplementationStatus> GetAllImplementationStatuses();
 
         List<Currency> GetAllCurrencies();
+
+        List<Industry> GetAllIndustries();
+
+        List<SolutionType> GetSolutionTypesByIds(List<int> ids);
+
+        List<Industry> GetIndustriesByIds(List<int> ids);
     }
 }

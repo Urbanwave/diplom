@@ -31,5 +31,10 @@ namespace InvestmentPlatform.Application.Services
         {
             return db.Cities.Where(x => x.Id == cityId).First().CountryId;
         }
+
+        public Country GetCountryByCityId(int cityId)
+        {
+            return db.Countries.Where(x => x.Cities.Select(z => z.Id).Contains(cityId)).First();
+        }
     }
 }

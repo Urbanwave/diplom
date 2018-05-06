@@ -10,15 +10,13 @@
         <div class="header-separator-solution"></div>
     </div>
 </div>
-
 <br />
 <br />
-
 
 <div class="block-text-solution">
-    @*<p class="location-solution">
-        @Model.Location
-    </p>*@
+    <p class="location-solution">
+        @Model.City.Country.Name, @Model.City.Name
+    </p>
 
     <div class="font-solution">
         <p>
@@ -36,44 +34,44 @@
 
         <div>
             <p class="list-name-solution">
-                <span class="bold-font">Kind of solution:</span>
+                <span class="bold-font">Kinds of solution:</span>
             </p>
             <div class="list-block-solution">
-                <p>
-                    test kind
-                </p>
-                <p>
-                    test 2
-                </p>
+                @foreach (var solutionKind in Model.SolutionTypes)
+                {
+                    <p>
+                        @solutionKind.Name
+                    </p>
+                }
             </div>
         </div>
 
         <div>
             <p class="list-name-solution">
-                <span class="bold-font">Industry:</span>
+                <span class="bold-font">Industries:</span>
             </p>
             <div class="list-block-solution">
-                <p>
-                    test industry 1
-                </p>
-                <p>
-                    test industry 2
-                </p>
+                @foreach (var industry in Model.Industries)
+                {
+                    <p>
+                        @industry.Name
+                    </p>
+                }
             </div>
         </div>
 
-        @*<p>
+        <p>
             <span class="bold-font">Project implementation status:</span>
-            @Model.ImplementationStatus
-        </p>*@
+            @Model.ImplementationStatus.Name
+        </p>
 
         <p>
             <span class="bold-font">Investment size:</span>
-            @Model.FromInvestmentSize - @Model.ToInvestmentSize             
+            @Model.InvestmentSize@Model.Currency.Name            
         </p>
     </div>
 </div>
 
 <div class="image-solution">
-    <img src="~/Content/images/homepage/pic1.jpg">
+    <img src="~/Content/images/profile/@Model.FileName">
 </div>

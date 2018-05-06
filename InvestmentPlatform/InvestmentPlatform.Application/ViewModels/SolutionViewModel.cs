@@ -9,13 +9,17 @@ namespace InvestmentPlatform.Models
 {
     public class SolutionViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "*Solution title:")]
         public string Title { get; set; }
 
         [Required]
         public int CityId { get; set; }
-        
+
+        public City City { get; set; }
+
         [Required]
         public int ImplementationStatusId { get; set; }
 
@@ -27,21 +31,23 @@ namespace InvestmentPlatform.Models
 
         public List<int> SelectedSolutionTypes { get; set; }
 
-
         [Required]
         public int CurrencyId { get; set; }
 
-        [Required]
-        public int FromInvestmentSize { get; set; }
+        public Currency Currency { get; set; }
+
+        public ImplementationStatus ImplementationStatus { get; set; }
 
         [Required]
-        public int ToInvestmentSize { get; set; }
+        public int InvestmentSize { get; set; }
 
-        [Required]
-        [Display(Name = "*Industry:")]
-        public string Industry { get; set; }
+        public List<Industry> Industries { get; set; }
+
+        public List<int> SelectedIndustries { get; set; }
 
         [Display(Name = "Something unique about solution:")]
         public string UniqueInfo { get; set; }
+
+        public string FileName { get; set; }
     }
 }

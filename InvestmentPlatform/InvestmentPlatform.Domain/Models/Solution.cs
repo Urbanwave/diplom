@@ -9,6 +9,12 @@ namespace InvestmentPlatform.Domain.Models
 {
     public class Solution
     {   
+        public Solution()
+        {
+            Industries = new List<Industry>();
+            SolutionTypes = new List<SolutionType>();
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -21,11 +27,6 @@ namespace InvestmentPlatform.Domain.Models
 
         public string UniqueInfo { get; set; }
 
-        [ForeignKey("SolutionType")]
-        public int SolutionTypeId { get; set; }
-
-        public SolutionType SolutionType { get; set; }
-
         [ForeignKey("Currency")]
         public int CurrencyId { get; set; }
 
@@ -34,13 +35,20 @@ namespace InvestmentPlatform.Domain.Models
         [ForeignKey("ImplementationStatus")]
         public int ImplementationStatusId { get; set; }
 
-        public ImplementationStatus ImplementationStatus { get; set; }
-
         [ForeignKey("City")]
         public int CityId { get; set; }
 
         public City City { get; set; }
 
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+
+        public ApplicationUser User { get; set; }
+
         public List<Industry> Industries { get; set; }
+
+        public List<SolutionType> SolutionTypes { get; set; }
+
+        public ImplementationStatus ImplementationStatus { get; set; }
     }
 }

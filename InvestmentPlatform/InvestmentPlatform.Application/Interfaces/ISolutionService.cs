@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace InvestmentPlatform.Application.Interfaces
 {
-    public interface ILocationService
+    public interface ISolutionService
     {
-        List<Country> GetAllCountries();
+        List<Solution> GetAllSolutions();
 
-        List<City> GetCitiesByCountryId(int countryId);
+        Solution GetSolutionById(int id);
 
-        int GetCountryIdByCityId(int cityId);
-
-        Country GetCountryByCityId(int cityId);
+        void AddSolution(Solution solution);
     }
 }

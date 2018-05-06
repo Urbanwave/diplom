@@ -1,4 +1,5 @@
-﻿
+﻿@model List<InvestmentPlatform.Models.SolutionViewModel> 
+
 @{
     ViewBag.Title = "All";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,28 +42,27 @@
 
 <div class="header-search-results">
     <h2>Solutions</h2>
-    <p>500 results</p>
+    <p>@Model.Count results</p>
 </div>
 
 <div class="home-page-solutions-block">
-    @for (int i = 0; i < 9; i++)
+    @foreach (var solution in Model)
     {
-        <a href="#">
+        <a href="~/Solution/View?id=@solution.Id">
             <div class="home-page-solutions">
                 <div class="home-page-solutions-image">
-                    <img src="~/Content/images/homepage/ny1.jpg">
+                    <img src="~/Content/images/profile/@solution.FileName">
                 </div>
 
                 <div class="home-page-solutions-description">
                     <p class="home-page-solution-title">
-                        Solution title
+                        @solution.Title
                     </p>
                     <p>
-                        I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.
+                        @solution.SolutionDescription
                     </p>
-                    <p><span class="blue-text bold-font">Location:</span> Belarus, Molodechno</p>
-                    <p><span class="blue-text bold-font">Investment size:</span> 1000000 $</p>
-
+                    <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
+                    <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize@solution.Currency.Name</p>
                 </div>
             </div>
         </a>

@@ -12,6 +12,8 @@ using InvestmentPlatform.Models;
 using InvestmentPlatform.Domain.Models;
 using InvestmentPlatform.Domain.Enums;
 using System.IO;
+using InvestmentPlatform.Application.Interfaces;
+using InvestmentPlatform.Application.Services;
 
 namespace InvestmentPlatform.Controllers
 {
@@ -20,9 +22,11 @@ namespace InvestmentPlatform.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        ITypeService typeService { get; set; }
 
         public AccountController()
         {
+            typeService = new TypeService();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -148,7 +152,11 @@ namespace InvestmentPlatform.Controllers
         [AllowAnonymous]
         public ActionResult InvestorRegister()
         {
-            return View();
+            var investorRegisterViewModel = new InvestorRegisterViewModel();
+
+            investorRegisterViewModel.InvestmentSectors = typeService.GetAllIndustries();
+
+            return View(investorRegisterViewModel);
         }
 
         [AllowAnonymous]
