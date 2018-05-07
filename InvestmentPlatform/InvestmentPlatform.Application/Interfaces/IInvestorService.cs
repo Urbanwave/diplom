@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InvestmentPlatform.Application.Interfaces
 {
-    interface IInvestmentService
+    public interface IInvestorService
     {
         List<ApplicationUser> GetAllInvestors();
     }
