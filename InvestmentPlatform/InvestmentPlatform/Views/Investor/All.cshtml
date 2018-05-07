@@ -1,0 +1,45 @@
+﻿@model InvestmentPlatform.Application.ViewModels.AllInvestorsViewModel 
+@{
+    ViewBag.Title = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">OFFERS OF INVESTORS</h2>
+<div class="header-separator"></div>
+<br />
+<br />
+<br />
+
+<div class="home-page-solutions-block">
+    @foreach (var investor in Model.InvestorViewModels)
+    {
+        @*<a href="~/Investor/View?id=@investor.Id">*@
+            <div class="home-page-solutions">
+                <div class="home-page-solutions-image">
+                    <img src="~/Content/images/profile/@investor.FileName">
+                </div>
+
+                <div class="home-page-solutions-description">
+                    <p class="home-page-solution-title">
+                        @investor.CompanyName
+                    </p>
+                    @*<p>
+                        @investor.InvestmentSize
+                    </p>*@
+                    <p><span class="blue-text bold-font">Location: </span>@investor.City.Country.Name, @investor.City.Name</p>
+                    <p><span class="blue-text bold-font">Investment size: 5000$ </span>   @*@investor.InvestmentSize@investor.Currency.Name*@</p>
+                </div>
+            </div>
+        @*</a>*@
+    }
+
+</div>
+<div class="pagination-block">
+    <ul class="pagination">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+    </ul>
+</div>

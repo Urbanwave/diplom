@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ISolutionService.cs" />
-    <Compile Include="Interfaces\IInvestmentService.cs" />
+    <Compile Include="Interfaces\IInvestorService.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
     <Compile Include="Interfaces\ITypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="Services\SolutionService.cs" />
     <Compile Include="Services\TypeService.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\AllInvestorsViewModel.cs" />
     <Compile Include="ViewModels\AllSolutionsViewModel.cs" />
     <Compile Include="ViewModels\InvestorViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />

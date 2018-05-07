@@ -300,6 +300,7 @@
     <Content Include="Views\Solution\Edit.cshtml" />
     <Content Include="Views\Solution\View.cshtml" />
     <Content Include="Views\Solution\All.cshtml" />
+    <Content Include="Views\Investor\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
