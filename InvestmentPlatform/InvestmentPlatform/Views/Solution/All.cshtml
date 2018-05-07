@@ -1,4 +1,4 @@
-﻿@model List<InvestmentPlatform.Models.SolutionViewModel> 
+﻿@model InvestmentPlatform.Application.ViewModels.AllSolutionsViewModel
 
 @{
     ViewBag.Title = "All";
@@ -13,21 +13,92 @@
 
 <div class="search-block-solutions">
     <div>
-        <div class="search-parameters-row">
+        <div class="search-label">
             Search by parameters
         </div>
             <div class="search-parameters-row">
-                <div class="">
-                    <select class=""></select>
-                    <select class=""></select>
-                    <select class=""></select>
+                <div class="filter-block">
+                    <div id="industries-dropdown" class="sectors-dropdown">Industries</div>
+                    <div id="industries-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.Industries)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedIndustries"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <div id="countries-dropdown" class="sectors-dropdown">Countries</div>
+                    <div id="countries-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.Countries)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedCountries"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <div id="cities-dropdown" class="sectors-dropdown">Cities</div>
+                    <div id="cities-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.Cities)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedCities"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="search-parameters-row">
-                <div class="">
-                    <select class=""></select>
-                    <select class=""></select>
-                    <select class=""></select>
+                <div class="filter-block">
+                    <div id="solutiontypes-dropdown" class="sectors-dropdown">Kinds of solution</div>
+                    <div id="solutiontypes-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.SolutionTypes)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedSolutionTypes"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <div id="solutionstatuses-dropdown" class="sectors-dropdown">Solution statuses</div>
+                    <div id="solutionstatuses-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.ImplementationStatuses)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedSolutionStatuses"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <div id="investmentsize-dropdown" class="sectors-dropdown">Investment size</div>
+                    <div id="investmentsize-block" class="checkboxes-block" style="display: none">
+                        From <input/> To <input />
+                    </div>
                 </div>
             </div>
             <div class="search-parameters-row">
@@ -42,11 +113,11 @@
 
 <div class="header-search-results">
     <h2>Solutions</h2>
-    <p>@Model.Count results</p>
+    <p>@Model.SolutionViewModels.Count results</p>
 </div>
 
 <div class="home-page-solutions-block">
-    @foreach (var solution in Model)
+    @foreach (var solution in Model.SolutionViewModels)
     {
         <a href="~/Solution/View?id=@solution.Id">
             <div class="home-page-solutions">
@@ -62,7 +133,7 @@
                         @solution.SolutionDescription
                     </p>
                     <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
-                    <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize@solution.Currency.Name</p>
+                    <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize @solution.Currency.Name</p>
                 </div>
             </div>
         </a>
@@ -78,3 +149,57 @@
         <li><a href="#">5</a></li>
     </ul>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#cities-dropdown").click(function () {
+            if ($("#cities-block").css('display') == 'none') {
+                $("#cities-block").show();
+            } else {
+                $("#cities-block").hide();
+            }
+        });
+
+        $("#countries-dropdown").click(function () {
+            if ($("#countries-block").css('display') == 'none') {
+                $("#countries-block").show();
+            } else {
+                $("#countries-block").hide();
+            }
+        });
+
+        $("#industries-dropdown").click(function () {
+            if ($("#industries-block").css('display') == 'none') {
+                $("#industries-block").show();
+            } else {
+                $("#industries-block").hide();
+            }
+        });
+
+
+        $("#solutiontypes-dropdown").click(function () {
+            if ($("#solutiontypes-block").css('display') == 'none') {
+                $("#solutiontypes-block").show();
+            } else {
+                $("#solutiontypes-block").hide();
+            }
+        });
+
+
+        $("#solutionstatuses-dropdown").click(function () {
+            if ($("#solutionstatuses-block").css('display') == 'none') {
+                $("#solutionstatuses-block").show();
+            } else {
+                $("#solutionstatuses-block").hide();
+            }
+        });
+
+        $("#investmentsize-dropdown").click(function () {
+            if ($("#investmentsize-block").css('display') == 'none') {
+                $("#investmentsize-block").show();
+            } else {
+                $("#investmentsize-block").hide();
+            }
+        });
+    });
+</script>

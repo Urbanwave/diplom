@@ -27,5 +27,12 @@ namespace InvestmentPlatform.Domain.Models
         public City City { get; set; }
 
         public List<Industry> Industries { get; set; }
+
+        public int InvestmentSize { get; set; }
+
+        [ForeignKey("Currency")]
+        public int? CurrencyId { get; set; }
+
+        public Currency Currency { get; set; }
     }
 }

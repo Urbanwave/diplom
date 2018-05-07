@@ -11,7 +11,7 @@ namespace InvestmentPlatform.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Solution title is required")]
         [Display(Name = "*Solution title:")]
         public string Title { get; set; }
 
@@ -23,7 +23,7 @@ namespace InvestmentPlatform.Models
         [Required]
         public int ImplementationStatusId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Solution description is required")]
         [Display(Name = "*Solution description:")]
         public string SolutionDescription { get; set; }
         
@@ -38,7 +38,7 @@ namespace InvestmentPlatform.Models
 
         public ImplementationStatus ImplementationStatus { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Investmaent size is required")]
         public int InvestmentSize { get; set; }
 
         public List<Industry> Industries { get; set; }

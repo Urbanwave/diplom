@@ -22,6 +22,11 @@ namespace InvestmentPlatform.Application.Services
             return db.Countries.ToList();
         }
 
+        public List<City> GetAllCities()
+        {
+            return db.Cities.ToList();
+        }
+
         public List<City> GetCitiesByCountryId(int countryId)
         {
             return db.Cities.Where(x => x.CountryId == countryId).ToList();

@@ -254,7 +254,7 @@ namespace InvestmentPlatform.Controllers
                     file.SaveAs(path);
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CityId = model.CityId, LogoFileName = pictureName };
+                var user = new ApplicationUser { UserName = model.CompanyName, Email = model.Email, CityId = model.CityId, LogoFileName = pictureName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

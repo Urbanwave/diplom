@@ -1,5 +1,6 @@
 ﻿using InvestmentPlatform.Application.Interfaces;
 using InvestmentPlatform.Application.Services;
+using InvestmentPlatform.Application.ViewModels;
 using InvestmentPlatform.Domain.Models;
 using InvestmentPlatform.Models;
 using Microsoft.AspNet.Identity;
@@ -43,6 +44,14 @@ namespace InvestmentPlatform.Controllers
 
         public ActionResult All()
         {
+            var allSolutionViewModel = new AllSolutionsViewModel();
+
+            allSolutionViewModel.Countries = locationService.GetAllCountries();
+            allSolutionViewModel.Cities = locationService.GetAllCities();
+            allSolutionViewModel.Industries = typeService.GetAllIndustries();
+            allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses();
+            allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
+
             var solutions = solutionService.GetAllSolutions();
             var solutionViewModels = new List<SolutionViewModel>();
 
@@ -55,7 +64,9 @@ namespace InvestmentPlatform.Controllers
                 solutionViewModels.Add(solutionViewModel);
             }
 
-            return View(solutionViewModels);
+            allSolutionViewModel.SolutionViewModels = solutionViewModels;
+
+            return View(allSolutionViewModel);
         }
 
         [Authorize(Roles = "Author")]
@@ -72,6 +83,11 @@ namespace InvestmentPlatform.Controllers
                 {
                     MapSolutionViewModel(solutionViewModel, solution);
                 }
+            }
+
+            if (TempData["ViewData"] != null)
+            {
+                ViewData = (ViewDataDictionary)TempData["ViewData"];
             }
 
             return View(solutionViewModel);
@@ -106,12 +122,17 @@ namespace InvestmentPlatform.Controllers
                     UserId = User.Identity.GetUserId()
                 };
 
-                solution.SolutionTypes.AddRange(typeService.GetSolutionTypesByIds(solutionViewModel.SelectedSolutionTypes));
-                solution.Industries.AddRange(typeService.GetIndustriesByIds(solutionViewModel.SelectedIndustries));
+                solution.SolutionTypes.Clear();
+                solution.Industries.Clear();
+
+                solution.SolutionTypes = typeService.GetSolutionTypesByIds(solutionViewModel.SelectedSolutionTypes);
+                solution.Industries = typeService.GetIndustriesByIds(solutionViewModel.SelectedIndustries);
 
                 solutionService.AddSolution(solution);
                 return RedirectToAction("All");
             }
+
+            TempData["ViewData"] = ViewData;
 
             return RedirectToAction("Edit", solutionViewModel);
         }
@@ -123,12 +144,12 @@ namespace InvestmentPlatform.Controllers
                 ModelState.AddModelError("", "Please select a city");
             }
 
-            if (model.SelectedSolutionTypes?.Count == 0)
+            if (model.SelectedSolutionTypes == null || model.SelectedSolutionTypes.Count == 0)
             {
                 ModelState.AddModelError("", "Please select at least one kind of solution");
             }
 
-            if (model.SelectedIndustries?.Count == 0)
+            if (model.SelectedIndustries == null || model.SelectedIndustries.Count == 0)
             {
                 ModelState.AddModelError("", "Please select at least one industry");
             }
