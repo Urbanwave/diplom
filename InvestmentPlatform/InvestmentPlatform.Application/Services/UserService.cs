@@ -9,20 +9,23 @@ using System.Threading.Tasks;
 
 namespace InvestmentPlatform.Application.Services
 {
-    public class InvestorService : IInvestorService
+    public class UserService : IUserService
     {
         ApplicationDbContext db;
 
-        public InvestorService()
+        public UserService()
         {
             db = new ApplicationDbContext();
         }
 
-        public List<ApplicationUser> GetAllInvestors()
+        public void MarkIndustriesAsUnchanged(ApplicationUser user)
         {
-            var roleId = db.Roles.Where(x => x.Name == "Investor").Select(x => x.Id).First();
-            return db.Users.Where(x => x.Roles.Select(z =>z.RoleId).Contains(roleId)).Include("City").Include("Industries").Include("Currency").ToList(); 
-        }
+            foreach (var industry in user.Industries)
+            {
+                db.Entry(industry).State = EntityState.Unchanged;
+            }
 
+            db.SaveChanges();
+        }
     }
 }

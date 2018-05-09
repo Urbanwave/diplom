@@ -165,37 +165,6 @@ namespace InvestmentPlatform.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await UserManager.AddToRoleAsync(user.Id, "user");
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -214,7 +183,16 @@ namespace InvestmentPlatform.Controllers
                     file.SaveAs(path);
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CityId = model.CityId, LogoFileName = pictureName };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    CityId = model.CityId,
+                    LogoFileName = pictureName,
+                    JobTitle = model.JobTitle,
+                    Website = model.Website
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -241,7 +219,7 @@ namespace InvestmentPlatform.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterInvestor(InvestorRegisterViewModel model, HttpPostedFileBase file)
         {
-            ValidateAuthorModel(model);
+            ValidateInvestorModel(model);
             ValidateImage(file);
             if (ModelState.IsValid)
             {
@@ -254,7 +232,20 @@ namespace InvestmentPlatform.Controllers
                     file.SaveAs(path);
                 }
 
-                var user = new ApplicationUser { UserName = model.CompanyName, Email = model.Email, CityId = model.CityId, LogoFileName = pictureName };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    CityId = model.CityId,
+                    LogoFileName = pictureName,
+                    CompanyName = model.CompanyName,
+                    CompanyDescription = model.CompanyDescription,
+                    Website = model.Website,
+                    InvestmentSize = model.InvestmentSize,
+                    CurrencyId = model.CurrencyId,
+                    Industries = typeService.GetIndustriesByIds(model.SelectedInvestmentSectors)
+            };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -273,6 +264,7 @@ namespace InvestmentPlatform.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            model.InvestmentSectors = typeService.GetAllIndustries();
             return View("InvestorRegister", model);
         }
 
@@ -285,11 +277,21 @@ namespace InvestmentPlatform.Controllers
             }
         }
 
-        private void ValidateAuthorModel(InvestorRegisterViewModel model)
+        private void ValidateInvestorModel(InvestorRegisterViewModel model)
         {
             if (model.CityId == 0)
             {
                 ModelState.AddModelError("", "Please select a city");
+            }
+
+            if (model.CurrencyId == 0)
+            {
+                ModelState.AddModelError("", "Please select a currency");
+            }
+
+            if (model.SelectedInvestmentSectors == null || model.SelectedInvestmentSectors.Count == 0)
+            {
+                ModelState.AddModelError("", "Please select at least one investment sector");
             }
         }
 

@@ -126,9 +126,12 @@
 
         @Html.ValidationMessageFor(m => m.InvestmentSize, null, new { @class = "text-danger error-text" })
         <div class="form-group">
-            @Html.LabelFor(m => m.InvestmentSize, new { @class = "col-md-3 control-label" })
+            <label class="col-md-3 control-label">*Investment Size:</label>
             <div class="col-md-7">
-                @Html.TextBoxFor(m => m.InvestmentSize, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.InvestmentSize, new { @class = "form-control inv-size-input", @type = "number", @min = "0" })
+                <select id="currency" class="form-control inv-size-input">
+                    <option value="" disabled selected>Select Currency</option>
+                </select>
             </div>
         </div>
 
@@ -146,6 +149,7 @@
         </div>
     </div>
     @Html.HiddenFor(x => x.CityId)
+    @Html.HiddenFor(x => x.CurrencyId)
 }
 
 <script type="text/javascript">
@@ -156,6 +160,22 @@
             } else {
                 $(".checkboxes-block").hide();
             }
+        });
+
+        $.getJSON('/type/GetCurrencies', null, function (data) {
+            $.each(data, function () {
+                $('#currency').append('<option value=' +
+                    this.Id + '>' + this.Name + '</option>');
+            });
+
+            var currencyId = $('#CurrencyId').val();
+            if ((currencyId != '') && (currencyId != null) && (currencyId != "0")) {
+                $('#currency').val(currencyId)
+            }
+        });
+
+        $('#currency').change(function () {
+            $('#CurrencyId').val($('#currency').val());
         });
     });
 </script>

@@ -103,13 +103,16 @@ namespace InvestmentPlatform.Models
         [Required]
         public int CityId { get; set; }
 
+        [Required]
+        public int CurrencyId { get; set; }
+
         public List<Industry> InvestmentSectors { get; set; }
 
         public List<int> SelectedInvestmentSectors { get; set; }
 
         [Required(ErrorMessage = "Investment size is required")]
         [Display(Name = "*Investment size:")]
-        public string InvestmentSize { get; set; }
+        public int InvestmentSize { get; set; }
     }
 
     public class AuthorRegisterViewModel

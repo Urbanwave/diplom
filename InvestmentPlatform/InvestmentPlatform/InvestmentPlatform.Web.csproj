@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201805072103157_UpdateAppUserInvestor.Designer.cs">
       <DependentUpon>201805072103157_UpdateAppUserInvestor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805091242593_UpdateApplicationUserAddAllFields.cs" />
+    <Compile Include="Migrations\201805091242593_UpdateApplicationUserAddAllFields.Designer.cs">
+      <DependentUpon>201805091242593_UpdateApplicationUserAddAllFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -350,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805072103157_UpdateAppUserInvestor.resx">
       <DependentUpon>201805072103157_UpdateAppUserInvestor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091242593_UpdateApplicationUserAddAllFields.resx">
+      <DependentUpon>201805091242593_UpdateApplicationUserAddAllFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

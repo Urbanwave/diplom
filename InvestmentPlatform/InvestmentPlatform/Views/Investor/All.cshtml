@@ -13,24 +13,23 @@
 <div class="home-page-solutions-block">
     @foreach (var investor in Model.InvestorViewModels)
     {
-        @*<a href="~/Investor/View?id=@investor.Id">*@
+        <a href="~/Investor/View?id=@investor.Id">
             <div class="home-page-solutions">
                 <div class="home-page-solutions-image">
                     <img src="~/Content/images/profile/@investor.FileName">
                 </div>
-
                 <div class="home-page-solutions-description">
                     <p class="home-page-solution-title">
                         @investor.CompanyName
                     </p>
-                    @*<p>
-                        @investor.InvestmentSize
-                    </p>*@
+                    <p>
+                        @investor.CompanyDescription
+                    </p>
                     <p><span class="blue-text bold-font">Location: </span>@investor.City.Country.Name, @investor.City.Name</p>
-                    <p><span class="blue-text bold-font">Investment size: 5000$ </span>   @*@investor.InvestmentSize@investor.Currency.Name*@</p>
+                    <p><span class="blue-text bold-font">Investment size: @investor.InvestmentSize </span>@investor.Currency.Name</p>
                 </div>
             </div>
-        @*</a>*@
+        </a>
     }
 
 </div>

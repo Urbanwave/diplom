@@ -43,12 +43,14 @@ namespace InvestmentPlatform.Controllers
 
         private void MapInvestorViewModel(InvestorViewModel investorViewModel, ApplicationUser investor)
         {
-           // investorViewModel.Currency = solution.Currency;
+            investorViewModel.Id = investor.Id;
+            investorViewModel.Currency = investor.Currency;
             investorViewModel.FileName = investor.LogoFileName;
             investorViewModel.City = investor.City;
-           // investorViewModel.InvestmentSize = investor.InvestmentSize;
+            investorViewModel.InvestmentSize = investor.InvestmentSize;
             investorViewModel.CompanyName = investor.UserName;
-            
+            investorViewModel.CompanyDescription = investor.CompanyDescription;
+            investorViewModel.Industries = investorViewModel.Industries;
         }
     }
 }

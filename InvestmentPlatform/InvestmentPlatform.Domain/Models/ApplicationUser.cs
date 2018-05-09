@@ -19,7 +19,19 @@ namespace InvestmentPlatform.Domain.Models
             return userIdentity;
         }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string LogoFileName { get; set; }
+
+        public string JobTitle { get; set; }
+
+        public string Website { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public string CompanyDescription { get; set; }
 
         [ForeignKey("City")]
         public int CityId { get; set; }
