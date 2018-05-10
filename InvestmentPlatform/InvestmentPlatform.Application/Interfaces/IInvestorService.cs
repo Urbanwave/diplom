@@ -10,5 +10,7 @@ namespace InvestmentPlatform.Application.Interfaces
     public interface IInvestorService
     {
         List<ApplicationUser> GetAllInvestors();
+
+        ApplicationUser GetInvestorById(string id);
     }
 }

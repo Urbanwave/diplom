@@ -41,6 +41,21 @@ namespace InvestmentPlatform.Controllers
             return View(allInvestorsViewModel);
         }
 
+        public ActionResult View(string id)
+        {
+            var investorViewModel = new InvestorViewModel();
+
+            var investor = investorService.GetInvestorById(id);
+
+            if (investor != null)
+            {
+                MapInvestorViewModel(investorViewModel, investor);
+                investor.City.Country = locationService.GetCountryByCityId(investor.CityId);
+            }
+
+            return View(investorViewModel);
+        }
+
         private void MapInvestorViewModel(InvestorViewModel investorViewModel, ApplicationUser investor)
         {
             investorViewModel.Id = investor.Id;
@@ -48,9 +63,9 @@ namespace InvestmentPlatform.Controllers
             investorViewModel.FileName = investor.LogoFileName;
             investorViewModel.City = investor.City;
             investorViewModel.InvestmentSize = investor.InvestmentSize;
-            investorViewModel.CompanyName = investor.UserName;
+            investorViewModel.CompanyName = investor.CompanyName;
             investorViewModel.CompanyDescription = investor.CompanyDescription;
-            investorViewModel.Industries = investorViewModel.Industries;
+            investorViewModel.Industries = investor.Industries;
         }
     }
 }
