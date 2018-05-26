@@ -191,6 +191,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\InvestorController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -226,6 +227,18 @@
     <Compile Include="Migrations\201805091242593_UpdateApplicationUserAddAllFields.cs" />
     <Compile Include="Migrations\201805091242593_UpdateApplicationUserAddAllFields.Designer.cs">
       <DependentUpon>201805091242593_UpdateApplicationUserAddAllFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805212029403_UpdateApplicationUserAddFavoriteProjects.cs" />
+    <Compile Include="Migrations\201805212029403_UpdateApplicationUserAddFavoriteProjects.Designer.cs">
+      <DependentUpon>201805212029403_UpdateApplicationUserAddFavoriteProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805232110005_FixFavoriteProjects.cs" />
+    <Compile Include="Migrations\201805232110005_FixFavoriteProjects.Designer.cs">
+      <DependentUpon>201805232110005_FixFavoriteProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805232119273_RemoveFavoriteProjectsFromUser.cs" />
+    <Compile Include="Migrations\201805232119273_RemoveFavoriteProjectsFromUser.Designer.cs">
+      <DependentUpon>201805232119273_RemoveFavoriteProjectsFromUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -265,7 +278,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -305,6 +320,10 @@
     <Content Include="Views\Solution\View.cshtml" />
     <Content Include="Views\Solution\All.cshtml" />
     <Content Include="Views\Investor\All.cshtml" />
+    <Content Include="Views\Investor\Edit.cshtml" />
+    <Content Include="Views\Author\Edit.cshtml" />
+    <Content Include="Views\Investor\Index.cshtml" />
+    <Content Include="Views\Investor\FavoriteSolutions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -357,6 +376,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805091242593_UpdateApplicationUserAddAllFields.resx">
       <DependentUpon>201805091242593_UpdateApplicationUserAddAllFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805212029403_UpdateApplicationUserAddFavoriteProjects.resx">
+      <DependentUpon>201805212029403_UpdateApplicationUserAddFavoriteProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805232110005_FixFavoriteProjects.resx">
+      <DependentUpon>201805232110005_FixFavoriteProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805232119273_RemoveFavoriteProjectsFromUser.resx">
+      <DependentUpon>201805232119273_RemoveFavoriteProjectsFromUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -104,7 +104,7 @@
             <div class="search-parameters-row">
                 <div>
                     <input class="form-control search-input-solutions" placeholder="Search..." />
-                    <input class="custom-button" type="submit" value="Find" />
+                    <a class="custom-button" href="~/Solution/All">Find</a>
                     <input class="custom-button-reset" type="button" value="Reset" />
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         @solution.Title
                     </p>
                     <p>
-                        @solution.SolutionDescription
+                        @(solution.SolutionDescription.Length > 90 ? solution.SolutionDescription.Substring(0, 87) + "..." : solution.SolutionDescription)
                     </p>
                     <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
                     <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize @solution.Currency.Name</p>
@@ -142,16 +142,34 @@
 </div>
 <div class="pagination-block">
     <ul class="pagination">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
+        @for (int i = 1; i <= Model.ProjectAmount; i++)
+        {
+            <li class="page-item"><a class="page-link" href="~/Solution/All?page=@i">@i</a></li>
+        }
     </ul>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        function getParameterByName(name) {
+            var regexS = "[\\?&]" + name + "=([^&#]*)",
+                regex = new RegExp(regexS),
+                results = regex.exec(window.location.search);
+            if (results == null) {
+                return "";
+            } else {
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+        }
+
+        var page = getParameterByName("page");
+
+        if (page != '') {
+            $(".page-link:contains('" + page + "')").focus();
+        } else {
+            $(".page-link:contains('1')").focus();
+        }
+
         $("#cities-dropdown").click(function () {
             if ($("#cities-block").css('display') == 'none') {
                 $("#cities-block").show();

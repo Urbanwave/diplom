@@ -18,9 +18,15 @@ namespace InvestmentPlatform.Application.Services
             db = new ApplicationDbContext();
         }
 
-        public List<Solution> GetAllSolutions()
+        public List<Solution> GetAllSolutions(int page, int pageSize)
         {
-            return db.Solutions.Include("City").Include("Currency").Include("ImplementationStatus").ToList();
+            return db.Solutions.Include("City").Include("Currency").Include("ImplementationStatus")
+                .OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public List<FavoriteSolution> GetAllFavoriteSolutionsByUserId(string id)
+        {
+            return db.FavoriteSolutions.Where(x => x.FollowedUserId == id).ToList();
         }
 
         public Solution GetSolutionById(int id)
@@ -42,6 +48,29 @@ namespace InvestmentPlatform.Application.Services
 
             db.Solutions.Add(solution);
             db.SaveChanges();
+        }
+
+        public int GetSolutionsAmount()
+        {
+            return db.Solutions.Count();
+        }
+
+        public void AddFavoriteSolution(FavoriteSolution favoriteSolution)
+        {
+            db.FavoriteSolutions.Add(favoriteSolution);
+            db.SaveChanges();
+        }
+
+        public void RemoveFavoriteSolution(FavoriteSolution favoriteSolution)
+        {
+            db.FavoriteSolutions.Remove(favoriteSolution);
+            db.SaveChanges();
+        }
+
+
+        public List<int> GetFavoriteSolutionsByUserId(string id)
+        {
+            return db.FavoriteSolutions.Where(x => x.FollowedUserId == id).Select(x => x.FollowedSolutionId).ToList();
         }
     }
 }

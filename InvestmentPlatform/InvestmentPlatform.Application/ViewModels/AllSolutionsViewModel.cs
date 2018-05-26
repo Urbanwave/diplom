@@ -28,6 +28,8 @@ namespace InvestmentPlatform.Application.ViewModels
 
         public List<int> SelectedIndustries { get; set; }
 
+        public int ProjectAmount { get; set; }
+
         public AllSolutionsViewModel()
         {
             SolutionViewModels = new List<SolutionViewModel>();

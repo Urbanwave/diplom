@@ -10,6 +10,8 @@ namespace InvestmentPlatform.Application.ViewModels
     {        
         public List<InvestorViewModel> InvestorViewModels { get; set; }
 
+        public int ProjectAmount { get; set; }
+
         public AllInvestorsViewModel()
         {
             InvestorViewModels = new List<InvestorViewModel>();

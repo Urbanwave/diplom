@@ -27,5 +27,6 @@ namespace InvestmentPlatform.Domain.Models
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Solution> Solutions { get; set; }
         public DbSet<SolutionType> SolutionTypes { get; set; }
+        public DbSet<FavoriteSolution> FavoriteSolutions { get; set; }     
     }
 }

@@ -1,0 +1,54 @@
+﻿@model InvestmentPlatform.Application.ViewModels.AllSolutionsViewModel
+
+@{
+    ViewBag.Title = "FavoriteSolutions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">YOUR PROFILE</h2>
+<div class="header-separator"></div>
+<br />
+
+<hr class="navigation-top-hr "/>
+<div>
+    <div class="profile-navigation-block">
+        <a href="~/Investor/Index"><span>Profile</span></a>
+        <a href="~/Investor/FavoriteSolutions" class="active-tab">Favorite Solutions</a>
+        <a href="~/Investor/Edit">Settings</a>
+    </div>
+</div>
+<hr class="navigation-bottom-hr "/>
+
+<div class="home-page-solutions-block">
+    @foreach (var solution in Model.SolutionViewModels)
+    {
+        <a href="~/Solution/View?id=@solution.Id">
+            <div class="home-page-solutions">
+                <div class="home-page-solutions-image">
+                    <img src="~/Content/images/profile/@solution.FileName">
+                </div>
+
+                <div class="home-page-solutions-description">
+                    <p class="home-page-solution-title">
+                        @solution.Title
+                    </p>
+                    <p>
+                        @(solution.SolutionDescription.Length > 90 ? solution.SolutionDescription.Substring(0, 87) + "..." : solution.SolutionDescription)
+                    </p>
+                    <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
+                    <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize @solution.Currency.Name</p>
+                </div>
+            </div>
+        </a>
+    }
+
+</div>
+<div class="pagination-block">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.ProjectAmount; i++)
+        {
+            <li class="page-item"><a class="page-link" href="~/Solution/All?page=@i">@i</a></li>
+        }
+    </ul>
+</div>
+

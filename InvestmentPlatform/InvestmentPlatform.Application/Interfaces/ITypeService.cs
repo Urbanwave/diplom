@@ -20,5 +20,7 @@ namespace InvestmentPlatform.Application.Interfaces
         List<SolutionType> GetSolutionTypesByIds(List<int> ids);
 
         List<Industry> GetIndustriesByIds(List<int> ids);
+
+        void AddIndustriesToUser(string userId, List<int> industryIds);
     }
 }

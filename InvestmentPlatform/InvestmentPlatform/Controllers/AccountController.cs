@@ -23,9 +23,11 @@ namespace InvestmentPlatform.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         ITypeService typeService { get; set; }
+        IUserService userService { get; set; }
 
         public AccountController()
         {
+            userService = new UserService();
             typeService = new TypeService();
         }
 
@@ -244,9 +246,10 @@ namespace InvestmentPlatform.Controllers
                     Website = model.Website,
                     InvestmentSize = model.InvestmentSize,
                     CurrencyId = model.CurrencyId,
-                    Industries = typeService.GetIndustriesByIds(model.SelectedInvestmentSectors)
-            };
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+                typeService.AddIndustriesToUser(user.Id, model.SelectedInvestmentSectors);
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, Role.Investor.ToString());

@@ -9,6 +9,8 @@ namespace InvestmentPlatform.Application.Interfaces
 {
     public interface IInvestorService
     {
-        List<ApplicationUser> GetAllInvestors();
+        List<ApplicationUser> GetAllInvestors(int page, int pageSize);
+
+        int GetInvestorsCount();
     }
 }

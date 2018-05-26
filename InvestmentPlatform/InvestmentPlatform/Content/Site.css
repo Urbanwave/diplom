@@ -24,6 +24,10 @@ textarea {
     max-width: 280px;
 }
 
+.inline-display {
+    display: inline-block;
+}
+
 .navbar-style {
     background-color: #1e2d3b;
     z-index:99999;
@@ -323,8 +327,34 @@ textarea {
     max-width: 280px;
 }
 
-@media (min-width: 768px) {
+.profile-navigation-block {
+    width: 60%;
+    margin: auto;
+}
 
+.profile-navigation-block a {
+    text-align: center;
+    width: 33%;
+    display: inline-block;
+    text-decoration: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #3D5975;
+}
+
+.active-tab {
+    background-color: rgba(237, 205, 31, 1);
+}
+
+.navigation-top-hr {
+    margin-bottom: 5px;
+}
+
+.navigation-bottom-hr {
+    margin-top: 5px;
+}
+
+@media (min-width: 768px) {
     .inv-size-input{
         width: 25% !important;
         display: inline-block;
@@ -464,9 +494,26 @@ textarea {
         list-style-type: none;
         padding: 0
     }
+
+    .follow-star {
+        display: inline-block;
+        float: right;
+        margin-top: 45px;
+    }
 }
 
 @media (max-width: 768px) {
+    .follow-star {
+        display: inline-block;
+        float: right;
+        margin-top: 20px;
+    }
+
+    .follow-star img{
+        width: 40px;
+        height: 40px;
+    }
+
     .search-block-solutions div:nth-child(1) {
         width: 86%;
         margin: auto;

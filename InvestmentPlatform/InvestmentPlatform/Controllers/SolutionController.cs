@@ -18,12 +18,14 @@ namespace InvestmentPlatform.Controllers
         ITypeService typeService { get; set; }
         ISolutionService solutionService { get; set; }
         ILocationService locationService { get; set; }
+        IUserService userService { get; set; }
 
         public SolutionController()
         {
             typeService = new TypeService();
             solutionService = new SolutionService();
             locationService = new LocationService();
+            userService = new UserService();
         }
 
         // GET: Solution
@@ -36,14 +38,15 @@ namespace InvestmentPlatform.Controllers
             if (solution != null)
             {
                 MapSolutionViewModel(solutionViewModel, solution);
-                solution.City.Country = locationService.GetCountryByCityId(solution.CityId);
+                solutionViewModel.City.Country = locationService.GetCountryByCityId(solution.CityId);
             }
 
             return View(solutionViewModel);
         }
 
-        public ActionResult All()
+        public ActionResult All(string searchString = "", int page = 1)
         {
+            int pageSize = 3;
             var allSolutionViewModel = new AllSolutionsViewModel();
 
             allSolutionViewModel.Countries = locationService.GetAllCountries();
@@ -52,7 +55,18 @@ namespace InvestmentPlatform.Controllers
             allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses();
             allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
 
-            var solutions = solutionService.GetAllSolutions();
+            var projectAmount = solutionService.GetSolutionsAmount();
+
+            if (projectAmount % pageSize > 0)
+            {
+                allSolutionViewModel.ProjectAmount = projectAmount / pageSize + 1;
+            } else
+            {
+                allSolutionViewModel.ProjectAmount = projectAmount / pageSize;
+            }
+
+            var solutions = solutionService.GetAllSolutions(page, pageSize).Where(x => x.SolutionDescription.Contains(searchString)
+            || x.Title.Contains(searchString) || x.Currency.Name.Contains(searchString) );
             var solutionViewModels = new List<SolutionViewModel>();
 
             foreach (var solution in solutions)
@@ -137,6 +151,34 @@ namespace InvestmentPlatform.Controllers
             return RedirectToAction("Edit", solutionViewModel);
         }
 
+        [Authorize(Roles = "Investor")]
+        public ActionResult Follow(int id = 0)
+        {
+            var userId = User.Identity.GetUserId();
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var favoriteSolutions = solutionService.GetAllFavoriteSolutionsByUserId(userId);
+
+                if (favoriteSolutions.Any(x => x.FollowedSolutionId == id))
+                {
+                    var solutionToRemove = favoriteSolutions.Where(x => x.FollowedSolutionId == id).First();
+                    solutionService.RemoveFavoriteSolution(solutionToRemove);
+                } else
+                {
+                    var favoriteSolution = new FavoriteSolution()
+                    {
+                        FollowedSolutionId = id,
+                        FollowedUserId = userId
+                    };
+
+                    solutionService.AddFavoriteSolution(favoriteSolution);
+                }
+            }
+
+            return RedirectToAction("View", new { id = id});
+        }
+
         private void ValidateSolutionModel(SolutionViewModel model)
         {
             if (model.CityId == 0)
@@ -183,6 +225,11 @@ namespace InvestmentPlatform.Controllers
             solutionViewModel.Industries = solution.Industries;
             solutionViewModel.SolutionTypes = solution.SolutionTypes;
             solutionViewModel.ImplementationStatus = solution.ImplementationStatus;
+
+            var userId = User.Identity.GetUserId();
+            var favoriteSolution = solutionService.GetAllFavoriteSolutionsByUserId(userId);
+
+            solutionViewModel.IsFollowed = favoriteSolution.Select(x => x.FollowedSolutionId).Contains(solution.Id);
         }
     }
 }

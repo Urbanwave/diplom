@@ -1,4 +1,6 @@
-﻿using InvestmentPlatform.Domain.Models;
+﻿using InvestmentPlatform.Application.ViewModels;
+using InvestmentPlatform.Domain.Models;
+using InvestmentPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,10 @@ namespace InvestmentPlatform.Application.Interfaces
 {
     public interface IUserService
     {
-        void MarkIndustriesAsUnchanged(ApplicationUser user);
+        ApplicationUser GetUserById(string id);
+
+        void UpdateUser(InvestorEditViewModel model, ApplicationUser user, string pictureName);
+
+        void UpdateUser(AuthorEditViewModel model, ApplicationUser user, string pictureName);
     }
 }

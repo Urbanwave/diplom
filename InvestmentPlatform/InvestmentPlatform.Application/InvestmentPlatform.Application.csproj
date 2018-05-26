@@ -76,6 +76,8 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AllInvestorsViewModel.cs" />
     <Compile Include="ViewModels\AllSolutionsViewModel.cs" />
+    <Compile Include="ViewModels\AuthorEditViewModel.cs" />
+    <Compile Include="ViewModels\InvestorEditViewModel.cs" />
     <Compile Include="ViewModels\InvestorViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />

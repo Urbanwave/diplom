@@ -100,6 +100,14 @@ namespace InvestmentPlatform.Models
         [Display(Name = "Website:")]
         public string Website { get; set; }
 
+        public string Id { get; set; }
+
+        public City City { get; set; }
+
+        public Currency Curency { get; set; }
+
+        public string FileName { get; set; }
+
         [Required]
         public int CityId { get; set; }
 

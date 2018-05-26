@@ -22,9 +22,12 @@
                     <p class="home-page-solution-title">
                         @investor.CompanyName
                     </p>
-                    <p>
-                        @investor.CompanyDescription
-                    </p>
+                    @if (!string.IsNullOrEmpty(investor.CompanyDescription))
+                    {
+                        <p>
+                            @(investor.CompanyDescription.Length > 90 ? investor.CompanyDescription.Substring(0, 87) + "..." : investor.CompanyDescription)
+                        </p>
+                    }
                     <p><span class="blue-text bold-font">Location: </span>@investor.City.Country.Name, @investor.City.Name</p>
                     <p><span class="blue-text bold-font">Investment size: @investor.InvestmentSize </span>@investor.Currency.Name</p>
                 </div>
@@ -35,10 +38,33 @@
 </div>
 <div class="pagination-block">
     <ul class="pagination">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
+        @for (int i = 1; i <= Model.ProjectAmount; i++)
+        {
+            <li class="page-item"><a class="page-link" href="~/Investor/All?page=@i">@i</a></li>
+        }
     </ul>
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function getParameterByName(name) {
+            var regexS = "[\\?&]" + name + "=([^&#]*)",
+                regex = new RegExp(regexS),
+                results = regex.exec(window.location.search);
+            if (results == null) {
+                return "";
+            } else {
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+        }
+
+        var page = getParameterByName("page");
+
+        if (page != '') {
+            $(".page-link:contains('" + page + "')").focus();
+        } else {
+            $(".page-link:contains('1')").focus();
+        }
+    });
+</script>

@@ -18,11 +18,16 @@ namespace InvestmentPlatform.Application.Services
             db = new ApplicationDbContext();
         }
 
-        public List<ApplicationUser> GetAllInvestors()
+        public List<ApplicationUser> GetAllInvestors(int page, int pageSize)
         {
             var roleId = db.Roles.Where(x => x.Name == "Investor").Select(x => x.Id).First();
-            return db.Users.Where(x => x.Roles.Select(z =>z.RoleId).Contains(roleId)).Include("City").Include("Industries").Include("Currency").ToList(); 
+            return db.Users.Where(x => x.Roles.Select(z =>z.RoleId).Contains(roleId)).Include("City").Include("Industries").Include("Currency").OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList(); 
         }
 
+        public int GetInvestorsCount()
+        {
+            var roleId = db.Roles.Where(x => x.Name == "Investor").Select(x => x.Id).First();
+            return db.Users.Where(x => x.Roles.Select(z => z.RoleId).Contains(roleId)).Count();
+        }
     }
 }
