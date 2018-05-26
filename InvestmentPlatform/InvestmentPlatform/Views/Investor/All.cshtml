@@ -28,8 +28,16 @@
                             @(investor.CompanyDescription.Length > 90 ? investor.CompanyDescription.Substring(0, 87) + "..." : investor.CompanyDescription)
                         </p>
                     }
-                    <p><span class="blue-text bold-font">Location: </span>@investor.City.Country.Name, @investor.City.Name</p>
-                    <p><span class="blue-text bold-font">Investment size: @investor.InvestmentSize </span>@investor.Currency.Name</p>
+                    <p><span class="blue-text bold-font"><i class="fa fa-2x fa-map-marker"></i> </span>@investor.City.Country.Name, @investor.City.Name</p>
+
+                    <div>
+                        <i class="fa fa-2x fa-crosshairs blue-text"></i>
+                        <div class="list-block-solution">
+                            @string.Join(", ", investor.Industries.Select(x  => x.Name))
+                        </div>
+                    </div>
+
+                    <p><span class="blue-text bold-font"><i class="fa fa-2x fa-money"></i> @investor.InvestmentSize </span>@investor.Currency.Name</p>
                 </div>
             </div>
         </a>

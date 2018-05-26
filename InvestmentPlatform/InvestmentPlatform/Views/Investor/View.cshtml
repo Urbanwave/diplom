@@ -1,0 +1,50 @@
+﻿@model InvestmentPlatform.Application.ViewModels.InvestorViewModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header-block-solution">
+    <div>
+        <h2 class="header-page-solution">@Model.CompanyName</h2>
+        <div class="header-separator-solution"></div>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="block-text-solution">
+    <p class="location-solution">
+        @Model.City.Country.Name, @Model.City.Name
+    </p>
+
+    <div class="font-solution">
+        <p>
+            <span class="bold-font">Company description:</span>
+            @Model.CompanyDescription
+        </p>
+
+        <div>
+            <p class="list-name-solution">
+                <span class="bold-font">Investment sectors:</span>
+            </p>
+            <div class="list-block-solution">
+                @foreach (var industry in Model.Industries)
+                {
+                    <p>
+                        @industry.Name
+                    </p>
+                }
+            </div>
+        </div>
+
+         <p>
+            <span class="bold-font">Investment size:</span>
+            @Model.InvestmentSize @Model.Currency.Name
+        </p>
+    </div>
+</div>
+
+<div class="image-solution">
+    <img src="~/Content/images/profile/@Model.FileName">
+</div>

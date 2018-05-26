@@ -12,5 +12,7 @@ namespace InvestmentPlatform.Application.Interfaces
         List<ApplicationUser> GetAllInvestors(int page, int pageSize);
 
         int GetInvestorsCount();
+
+        ApplicationUser GetInvestorById(string id);
     }
 }
