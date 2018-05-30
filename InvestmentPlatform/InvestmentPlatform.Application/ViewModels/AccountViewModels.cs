@@ -168,7 +168,7 @@ namespace InvestmentPlatform.Models
         [Display(Name = "*Job title:")]
         public string JobTitle { get; set; }
 
-        [Url(ErrorMessage = "Website is not valid")]
+        //[Url(ErrorMessage = "Website is not valid")]
         [MaxLength(100, ErrorMessage = "The Website must be not more than {1} characters long.")]
         [Display(Name = "Website:")]
         public string Website { get; set; }

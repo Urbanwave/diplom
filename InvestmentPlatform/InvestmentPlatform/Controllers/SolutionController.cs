@@ -44,6 +44,16 @@ namespace InvestmentPlatform.Controllers
             return View(solutionViewModel);
         }
 
+        [Authorize(Roles = "Author")]
+        public ActionResult Delete(int id = 0)
+        {
+            var userId = User.Identity.GetUserId();
+
+            solutionService.DeleteSolutionById(id, userId);
+
+            return RedirectToAction("Solutions", "Author");
+        }
+
         public ActionResult All(string searchString = "", int page = 1)
         {
             int pageSize = 3;
@@ -56,6 +66,7 @@ namespace InvestmentPlatform.Controllers
             allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
 
             var projectAmount = solutionService.GetSolutionsAmount();
+            allSolutionViewModel.AllProjectsCount = projectAmount;
 
             if (projectAmount % pageSize > 0)
             {
@@ -83,6 +94,22 @@ namespace InvestmentPlatform.Controllers
             return View(allSolutionViewModel);
         }
 
+
+        [Authorize(Roles = "Author")]
+        public ActionResult Add()
+        {
+            var solutionViewModel = new SolutionViewModel();
+            solutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
+            solutionViewModel.Industries = typeService.GetAllIndustries();
+
+            if (TempData["ViewData"] != null)
+            {
+                ViewData = (ViewDataDictionary)TempData["ViewData"];
+            }
+
+            return View(solutionViewModel);
+        }
+
         [Authorize(Roles = "Author")]
         public ActionResult Edit(int id = 0)
         {
@@ -96,15 +123,37 @@ namespace InvestmentPlatform.Controllers
                 if (solution != null)
                 {
                     MapSolutionViewModel(solutionViewModel, solution);
+                    solutionViewModel.City.Country = locationService.GetCountryByCityId(solution.CityId);
+                    solutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
+                    solutionViewModel.Industries = typeService.GetAllIndustries();
                 }
             }
 
-            if (TempData["ViewData"] != null)
+            return View(solutionViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Author")]
+        public ActionResult Edit(SolutionViewModel solutionViewModel, HttpPostedFileBase file)
+        {
+            ValidateSolutionModel(solutionViewModel);
+            if (ModelState.IsValid)
             {
-                ViewData = (ViewDataDictionary)TempData["ViewData"];
+                var pictureName = string.Empty;
+
+                if (file != null)
+                {
+                    pictureName = Path.GetFileName(file.FileName);
+                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                    file.SaveAs(path);
+                }
+
+                var solution = solutionService.GetSolutionById(solutionViewModel.Id);
+                solutionService.UpdateSolution(solutionViewModel, solution, pictureName);
+                return RedirectToAction("Solutions", "Author");
             }
 
-            return View(solutionViewModel);
+            return View("Edit", solutionViewModel);
         }
 
         [HttpPost]
@@ -148,7 +197,7 @@ namespace InvestmentPlatform.Controllers
 
             TempData["ViewData"] = ViewData;
 
-            return RedirectToAction("Edit", solutionViewModel);
+            return RedirectToAction("Add", solutionViewModel);
         }
 
         [Authorize(Roles = "Investor")]

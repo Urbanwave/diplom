@@ -4,11 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="header-page">EDIT YOUR PROFILE</h2>
+<h2 class="header-page">YOUR PROFILE</h2>
 <div class="header-separator"></div>
 <br />
-<br />
-<br />
+
+<hr class="navigation-top-hr " />
+<div>
+    <div class="profile-navigation-block">
+        <a href="~/Author/Index"><span>Profile</span></a>
+        <a href="~/Author/Solutions">My Solutions</a>
+        <a href="~/Author/Edit" class="active-tab">Settings</a>
+    </div>
+</div>
+<hr class="navigation-bottom-hr " />
+
 
 @using (Html.BeginForm("Edit", "Author", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
 {

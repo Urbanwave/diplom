@@ -249,12 +249,30 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\homepage\checkedstar.png" />
     <Content Include="Content\images\homepage\ny1.jpg" />
     <Content Include="Content\images\homepage\ny2.jpg" />
     <Content Include="Content\images\homepage\ny3.jpg" />
     <Content Include="Content\images\homepage\pic1.jpg" />
     <Content Include="Content\images\homepage\pic2.jpg" />
     <Content Include="Content\images\homepage\pic3.png" />
+    <Content Include="Content\images\homepage\uncheckedstar.png" />
+    <Content Include="Content\images\profile\123.bmp" />
+    <Content Include="Content\images\profile\At1J69erxSk.jpg" />
+    <Content Include="Content\images\profile\author.jpg" />
+    <Content Include="Content\images\profile\DSC_3634-400.jpg" />
+    <Content Include="Content\images\profile\DSC_3748-3.jpg" />
+    <Content Include="Content\images\profile\DSC_3991-2.jpg" />
+    <Content Include="Content\images\profile\investor.jpg" />
+    <Content Include="Content\images\profile\kQOUr2G_zOA.jpg" />
+    <Content Include="Content\images\profile\ny3.jpg" />
+    <Content Include="Content\images\profile\P70611-152919.jpg" />
+    <Content Include="Content\images\profile\P70611-165754.jpg" />
+    <Content Include="Content\images\profile\P70611-165802.jpg" />
+    <Content Include="Content\images\profile\P70611-165812.jpg" />
+    <Content Include="Content\images\profile\P70611-165849.jpg" />
+    <Content Include="Content\images\profile\P70611-165859.jpg" />
+    <Content Include="Content\images\profile\test123.jpg" />
     <Content Include="Content\images\signup\author.jpg" />
     <Content Include="Content\images\signup\investor.jpg" />
     <Content Include="Content\images\signup\test123.jpg" />
@@ -324,7 +342,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\InvestorRegister.cshtml" />
     <Content Include="Views\Account\AuthorRegister.cshtml" />
-    <Content Include="Views\Solution\Edit.cshtml" />
+    <Content Include="Views\Solution\Add.cshtml" />
     <Content Include="Views\Solution\View.cshtml" />
     <Content Include="Views\Solution\All.cshtml" />
     <Content Include="Views\Investor\All.cshtml" />
@@ -333,10 +351,12 @@
     <Content Include="Views\Investor\Index.cshtml" />
     <Content Include="Views\Investor\FavoriteSolutions.cshtml" />
     <Content Include="Views\Investor\View.cshtml" />
+    <Content Include="Views\Author\Index.cshtml" />
+    <Content Include="Views\Author\Solutions.cshtml" />
+    <Content Include="Views\Solution\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Location\" />
     <Folder Include="Views\Type\" />
   </ItemGroup>
   <ItemGroup>

@@ -16,5 +16,9 @@ namespace InvestmentPlatform.Application.Interfaces
         void UpdateUser(InvestorEditViewModel model, ApplicationUser user, string pictureName);
 
         void UpdateUser(AuthorEditViewModel model, ApplicationUser user, string pictureName);
+
+        int GetAuthorsAmount();
+
+        int GetInvestorsAmount();
     }
 }

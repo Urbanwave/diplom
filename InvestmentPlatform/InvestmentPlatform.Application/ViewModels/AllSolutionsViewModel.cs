@@ -29,6 +29,8 @@ namespace InvestmentPlatform.Application.ViewModels
         public List<int> SelectedIndustries { get; set; }
 
         public int ProjectAmount { get; set; }
+        
+        public int AllProjectsCount { get; set; }
 
         public AllSolutionsViewModel()
         {

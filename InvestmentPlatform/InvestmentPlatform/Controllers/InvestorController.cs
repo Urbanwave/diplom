@@ -30,13 +30,26 @@ namespace InvestmentPlatform.Controllers
             solutionService = new SolutionService();
         }
 
+        [Authorize(Roles = "Investor")]
         public ActionResult Index()
         {
-            return View();
+            var investorViewModel = new InvestorViewModel();
+
+            var userId = User.Identity.GetUserId();
+
+            var investor = investorService.GetInvestorById(userId);
+
+            if (investor != null)
+            {
+                MapInvestorViewModel(investorViewModel, investor);
+                investor.City.Country = locationService.GetCountryByCityId(investor.CityId);
+            }
+
+            return View(investorViewModel);
         }
 
         [Authorize(Roles = "Investor")]
-        public ActionResult FavoriteSolutions(string searchString = "", int page = 1)
+        public ActionResult FavoriteSolutions(int page = 1)
         {
             int pageSize = 3;
             var allSolutionViewModel = new AllSolutionsViewModel();
@@ -49,8 +62,7 @@ namespace InvestmentPlatform.Controllers
 
             var userId = User.Identity.GetUserId();
             var favoriteSolutionIds = solutionService.GetFavoriteSolutionsByUserId(userId);
-            var solutions = solutionService.GetAllSolutions(page, pageSize).Where(x => (x.SolutionDescription.Contains(searchString)
-            || x.Title.Contains(searchString) || x.Currency.Name.Contains(searchString)) && favoriteSolutionIds.Contains(x.Id));
+            var solutions = solutionService.GetAllSolutions(page, pageSize).Where(x => favoriteSolutionIds.Contains(x.Id));
 
             var projectAmount = solutions.Count();
 

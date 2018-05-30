@@ -1,0 +1,157 @@
+﻿@model InvestmentPlatform.Models.SolutionViewModel
+@{
+    ViewBag.Title = "AddSolution";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">ADD SOLUTION</h2>
+<div class="header-separator"></div>
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("Save", "Solution", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="registration-form-inputs">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger validation-summary" })
+
+        <div class="form-group registration-form-required-field">
+            <div class="col-md-10">
+                <label>
+                    *Required
+                </label>
+            </div>
+        </div>
+
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger error-text" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title, new { @class = "col-md-3 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            </div>
+        </div>
+
+        @Html.ValidationMessageFor(m => m.SolutionDescription, null, new { @class = "text-danger error-text" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.SolutionDescription, new { @class = "col-md-3 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.SolutionDescription, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">*Country:</label>
+            <div class="col-md-7">
+                <select id="country" class="form-control">
+                    <option value="" disabled selected>Select Country</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">*City:</label>
+            <div class="col-md-7">
+                <select id="city" class="form-control" disabled>
+                    <option value="" disabled selected>Select City</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                    *Kind of solution:
+            </label>
+
+            <div class="col-md-7">
+                @foreach (var item in Model.SolutionTypes)
+                {
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                    name="SelectedSolutionTypes"
+                                    value="@item.Id" /> @item.Name
+                            </label>
+                        </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">*Industry:</label>
+            <div class="col-md-7">
+                <div class="sectors-dropdown">Select Industries</div>
+                <div class="checkboxes-block" style="display: none">
+                @foreach (var item in Model.Industries)
+                {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="SelectedIndustries"
+                                       value="@item.Id" /> @item.Name
+                                </label>
+                            </div>
+                }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">*Solution Implementation Status:</label>
+            <div class="col-md-7">
+                <select id="implementationStatus" class="form-control">
+                    <option value="" disabled selected>Select Status</option>
+                </select>
+            </div>
+        </div>
+
+        @Html.ValidationMessageFor(m => m.InvestmentSize, null, new { @class = "text-danger error-text" })
+        <div class="form-group">
+            <label class="col-md-3 control-label">*Investment Size:</label>
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.InvestmentSize, new { @class = "form-control inv-size-input", @type = "number", @min = "0" })
+                <select id="currency" class="form-control inv-size-input">
+                    <option value="" disabled selected>Select Currency</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="file">Image:</label>
+            <div class="col-md-7">
+                <input type="file" name="file" id="file" style="width: 100%; margin-top: 6px;" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.UniqueInfo, new { @class = "col-md-3 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.UniqueInfo, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="registration-button-block">
+                <input type="submit" value="ADD SOLUTION" />
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(t => t.CityId)
+    @Html.HiddenFor(t => t.ImplementationStatusId)
+    @Html.HiddenFor(t => t.CurrencyId)
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".sectors-dropdown").click(function () {
+            if ($(".checkboxes-block").css('display') == 'none') {
+                $(".checkboxes-block").show();
+            } else {
+                $(".checkboxes-block").hide();
+            }
+        });
+    });
+</script>
+
+@Scripts.Render("~/bundles/location")
+@Scripts.Render("~/bundles/type")

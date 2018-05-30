@@ -55,5 +55,17 @@ namespace InvestmentPlatform.Application.Services
 
             db.SaveChanges();
         }
+
+        public int GetAuthorsAmount()
+        {
+            var roleId = db.Roles.Where(x => x.Name == "Author").Select(x => x.Id).First();
+            return db.Users.Where(x => x.Roles.Select(z => z.RoleId).Contains(roleId)).Count();
+        }
+
+        public int GetInvestorsAmount()
+        {
+            var roleId = db.Roles.Where(x => x.Name == "Investor").Select(x => x.Id).First();
+            return db.Users.Where(x => x.Roles.Select(z => z.RoleId).Contains(roleId)).Count();
+        }
     }
 }

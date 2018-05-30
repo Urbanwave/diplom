@@ -19,6 +19,8 @@ namespace InvestmentPlatform.Controllers
         ILocationService locationService { get; set; }
         IUserService userService { get; set; }
         ITypeService typeService { get; set; }
+        ISolutionService solutionService { get; set; }
+        IAuthorService authorService { get; set; }
 
         public AuthorController()
         {
@@ -26,6 +28,68 @@ namespace InvestmentPlatform.Controllers
             locationService = new LocationService();
             userService = new UserService();
             typeService = new TypeService();
+            solutionService = new SolutionService();
+            authorService = new AuthorService();
+        }
+
+        [Authorize(Roles = "Author")]
+        public ActionResult Index()
+        {
+            var authorViewModel = new AuthorEditViewModel();
+
+            var userId = User.Identity.GetUserId();
+
+            var author = authorService.GetAuthorById(userId);
+
+            if (author != null)
+            {
+                MapRegisterAuthorViewModel(authorViewModel, author);
+                authorViewModel.City.Country = locationService.GetCountryByCityId(author.CityId);
+            }
+
+            return View(authorViewModel);
+        }
+
+        [Authorize(Roles = "Author")]
+        public ActionResult Solutions(int page = 1)
+        {
+            int pageSize = 3;
+            var allSolutionViewModel = new AllSolutionsViewModel();
+
+            allSolutionViewModel.Countries = locationService.GetAllCountries();
+            allSolutionViewModel.Cities = locationService.GetAllCities();
+            allSolutionViewModel.Industries = typeService.GetAllIndustries();
+            allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses();
+            allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
+
+            var userId = User.Identity.GetUserId();
+            var solutions = solutionService.GetAllUserSolutions(page, pageSize, userId);
+
+            var projectAmount = solutions.Count();
+
+            if (projectAmount % pageSize > 0)
+            {
+                allSolutionViewModel.ProjectAmount = projectAmount / pageSize + 1;
+            }
+            else
+            {
+                allSolutionViewModel.ProjectAmount = projectAmount / pageSize;
+            }
+
+            var solutionViewModels = new List<SolutionViewModel>();
+
+            foreach (var solution in solutions)
+            {
+                var solutionViewModel = new SolutionViewModel();
+
+                MapSolutionViewModel(solutionViewModel, solution);
+                solution.City.Country = locationService.GetCountryByCityId(solution.CityId);
+                solutionViewModels.Add(solutionViewModel);
+            }
+
+            allSolutionViewModel.SolutionViewModels = solutionViewModels;
+
+            return View(allSolutionViewModel);
         }
 
         [Authorize(Roles = "Author")]
@@ -79,6 +143,7 @@ namespace InvestmentPlatform.Controllers
             authorRegisterViewModel.FileName = author.LogoFileName;
             authorRegisterViewModel.JobTitle = author.JobTitle;
             authorRegisterViewModel.Id = author.Id;
+            authorRegisterViewModel.City = author.City;
             authorRegisterViewModel.CityId = author.CityId;
             authorRegisterViewModel.Email = author.Email;
             authorRegisterViewModel.Website = author.Website;
@@ -108,6 +173,31 @@ namespace InvestmentPlatform.Controllers
             {
                 ModelState.AddModelError("", "Please select a city");
             }
+        }
+
+        private void MapSolutionViewModel(SolutionViewModel solutionViewModel, Solution solution)
+        {
+            solutionViewModel.Currency = solution.Currency;
+            solutionViewModel.FileName = solution.LogoFileName;
+            solutionViewModel.Id = solution.Id;
+            solutionViewModel.City = solution.City;
+            solutionViewModel.CityId = solution.CityId;
+            solutionViewModel.CurrencyId = solution.CurrencyId;
+            solutionViewModel.InvestmentSize = solution.InvestmentSize;
+            solutionViewModel.Title = solution.Title;
+            solutionViewModel.ImplementationStatusId = solution.ImplementationStatusId;
+            solutionViewModel.SelectedIndustries = solution.Industries.Select(x => x.Id).ToList();
+            solutionViewModel.SelectedSolutionTypes = solution.SolutionTypes.Select(x => x.Id).ToList();
+            solutionViewModel.UniqueInfo = solution.UniqueInfo;
+            solutionViewModel.SolutionDescription = solution.SolutionDescription;
+            solutionViewModel.Industries = solution.Industries;
+            solutionViewModel.SolutionTypes = solution.SolutionTypes;
+            solutionViewModel.ImplementationStatus = solution.ImplementationStatus;
+
+            var userId = User.Identity.GetUserId();
+            var favoriteSolution = solutionService.GetAllFavoriteSolutionsByUserId(userId);
+
+            solutionViewModel.IsFollowed = favoriteSolution.Select(x => x.FollowedSolutionId).Contains(solution.Id);
         }
     }
 }

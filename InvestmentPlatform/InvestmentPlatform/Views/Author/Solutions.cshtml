@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Solutions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">YOUR PROFILE</h2>
+<div class="header-separator"></div>
+<br />
+
+<hr class="navigation-top-hr " />
+<div>
+    <div class="profile-navigation-block">
+        <a href="~/Author/Index"><span>Profile</span></a>
+        <a href="~/Author/Solutions"  class="active-tab">My Solutions</a>
+        <a href="~/Author/Edit">Settings</a>
+    </div>
+</div>
+<hr class="navigation-bottom-hr " />
+
+<div class="home-page-solutions-block">
+    <div style="height: 40px">
+        <a href="/Solution/Add" class="custom-button" style="float:right">+ Add Solution</a>
+    </div>
+    @foreach (var solution in Model.SolutionViewModels)
+    {
+        <div class="my-projects-block">
+            <a href="~/Solution/View?id=@solution.Id">
+                <div class="home-page-solutions">
+                    <div class="home-page-solutions-image">
+                        <img src="~/Content/images/profile/@solution.FileName">
+                    </div>
+
+                    <div class="home-page-solutions-description">
+                        <p class="home-page-solution-title">
+                            @solution.Title
+                        </p>
+                        <p>
+                            @(solution.SolutionDescription.Length > 90 ? solution.SolutionDescription.Substring(0, 87) + "..." : solution.SolutionDescription)
+                        </p>
+                        <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
+                        <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize @solution.Currency.Name</p>
+                    </div>
+                </div>
+            </a>
+            <div class="project-actions-block">
+                <a href="/Solution/Edit?id=@solution.Id">Edit</a>
+                <a href="/Solution/Delete?id=@solution.Id">Delete</a>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="pagination-block">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.ProjectAmount; i++)
+        {
+            <li class="page-item"><a class="page-link" href="~/Solution/All?page=@i">@i</a></li>
+        }
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function getParameterByName(name) {
+            var regexS = "[\\?&]" + name + "=([^&#]*)",
+                regex = new RegExp(regexS),
+                results = regex.exec(window.location.search);
+            if (results == null) {
+                return "";
+            } else {
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+        }
+
+        var page = getParameterByName("page");
+
+        if (page != '') {
+            $(".page-link:contains('" + page + "')").focus();
+        } else {
+            $(".page-link:contains('1')").focus();
+        }
+</script>
+

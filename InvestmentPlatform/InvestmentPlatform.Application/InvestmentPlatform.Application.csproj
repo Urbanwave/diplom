@@ -62,12 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAuthorService.cs" />
     <Compile Include="Interfaces\ISolutionService.cs" />
     <Compile Include="Interfaces\IInvestorService.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\ITypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthorService.cs" />
     <Compile Include="Services\InvestorService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\SolutionService.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="ViewModels\AuthorEditViewModel.cs" />
     <Compile Include="ViewModels\InvestorEditViewModel.cs" />
     <Compile Include="ViewModels\InvestorViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>

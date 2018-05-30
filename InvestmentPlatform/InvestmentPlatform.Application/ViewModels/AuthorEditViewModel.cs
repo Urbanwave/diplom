@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvestmentPlatform.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace InvestmentPlatform.Application.ViewModels
         public string Website { get; set; }
 
         public string Id { get; set; }
+
+        public City City { get; set; }
 
         [Required]
         public int CityId { get; set; }

@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="header-page">ADD SOLUTION</h2>
+<h2 class="header-page">EDIT SOLUTION</h2>
 <div class="header-separator"></div>
 <br />
 <br />
 <br />
 
-@using (Html.BeginForm("Save", "Solution", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Solution", FormMethod.Post, new { @class = "form-horizontal registration-form", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="registration-form-inputs">
@@ -66,13 +66,27 @@
             <div class="col-md-7">
                 @foreach (var item in Model.SolutionTypes)
                 {
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"
-                                    name="SelectedSolutionTypes"
-                                    value="@item.Id" /> @item.Name
-                            </label>
-                        </div>
+                    if (Model.SelectedSolutionTypes != null && Model.SelectedSolutionTypes.Contains(item.Id))
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="SelectedSolutionTypes"
+                                       value="@item.Id" 
+                                       checked/> @item.Name
+                                </label>
+                            </div>
+                    }
+                    else
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="SelectedSolutionTypes"
+                                       value="@item.Id" /> @item.Name
+                                </label>
+                            </div>
+                    }
                 }
             </div>
         </div>
@@ -84,13 +98,27 @@
                 <div class="checkboxes-block" style="display: none">
                 @foreach (var item in Model.Industries)
                 {
+                    if(Model.SelectedIndustries != null && Model.SelectedIndustries.Contains(item.Id))
+                    {
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"
+                                <input type = "checkbox"
+                                       name="SelectedIndustries"
+                                       value="@item.Id" 
+                                       checked/> @item.Name
+                                </label>
+                            </div>
+                    }
+                    else
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type = "checkbox"
                                        name="SelectedIndustries"
                                        value="@item.Id" /> @item.Name
                                 </label>
-                            </div>
+                        </div>
+                    }
                 }
                 </div>
             </div>
@@ -132,13 +160,14 @@
 
         <div class="form-group">
             <div class="registration-button-block">
-                <input type="submit" value="ADD SOLUTION" />
+                <input type="submit" value="SAVE SOLUTION" />
             </div>
         </div>
     </div>
     @Html.HiddenFor(t => t.CityId)
     @Html.HiddenFor(t => t.ImplementationStatusId)
     @Html.HiddenFor(t => t.CurrencyId)
+    @Html.HiddenFor(t => t.Id)
 }
 
 <script type="text/javascript">

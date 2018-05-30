@@ -1,5 +1,6 @@
 ﻿using InvestmentPlatform.Application.Interfaces;
 using InvestmentPlatform.Domain.Models;
+using InvestmentPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,15 +13,23 @@ namespace InvestmentPlatform.Application.Services
     public class SolutionService : ISolutionService
     {
         ApplicationDbContext db;
+        ITypeService typeService;
 
         public SolutionService()
         {
             db = new ApplicationDbContext();
+            typeService = new TypeService();
         }
 
         public List<Solution> GetAllSolutions(int page, int pageSize)
         {
             return db.Solutions.Include("City").Include("Currency").Include("ImplementationStatus")
+                .OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public  List<Solution> GetAllUserSolutions(int page, int pageSize, string userId)
+        {
+            return db.Solutions.Where(x => x.UserId == userId).Include("City").Include("Currency").Include("ImplementationStatus")
                 .OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
@@ -55,6 +64,11 @@ namespace InvestmentPlatform.Application.Services
             return db.Solutions.Count();
         }
 
+        public int GetFavouriteSolutionsAmount()
+        {
+            return db.FavoriteSolutions.Count();
+        }
+
         public void AddFavoriteSolution(FavoriteSolution favoriteSolution)
         {
             db.FavoriteSolutions.Add(favoriteSolution);
@@ -71,6 +85,44 @@ namespace InvestmentPlatform.Application.Services
         public List<int> GetFavoriteSolutionsByUserId(string id)
         {
             return db.FavoriteSolutions.Where(x => x.FollowedUserId == id).Select(x => x.FollowedSolutionId).ToList();
+        }
+
+        public void DeleteSolutionById(int id, string userId)
+        {
+            var solution = GetSolutionById(id);
+            if (solution.UserId == userId)
+            {
+                db.Solutions.Remove(solution);
+                db.SaveChanges();
+            }
+        }
+
+        public void UpdateSolution(SolutionViewModel solutionViewModel, Solution solution, string pictureName)
+        {
+            solution.CityId = solutionViewModel.CityId;
+            solution.CurrencyId = solutionViewModel.CurrencyId;
+            solution.InvestmentSize = solutionViewModel.InvestmentSize;
+            solution.ImplementationStatusId = solutionViewModel.ImplementationStatusId;
+            solution.LogoFileName = string.IsNullOrEmpty(pictureName) ? solution.LogoFileName : pictureName;
+            solution.SolutionDescription = solutionViewModel.SolutionDescription;
+
+            solution.SolutionTypes.Clear();
+            solution.Industries.Clear();
+
+            solution.SolutionTypes = typeService.GetSolutionTypesByIds(solutionViewModel.SelectedSolutionTypes);
+            //solution.Industries = typeService.GetIndustriesByIds(solutionViewModel.SelectedIndustries);
+
+            foreach (var solutionType in solution.SolutionTypes)
+            {
+                db.Entry(solutionType).State = EntityState.Unchanged;
+            }
+
+            //foreach (var industry in solution.Industries)
+            //{
+            //    db.Entry(industry).State = EntityState.Unchanged;
+            //}
+
+            db.SaveChanges();
         }
     }
 }

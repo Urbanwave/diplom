@@ -190,11 +190,14 @@ textarea {
     font-size: 18px;
     display: inline-block;
     width: 15%;
+    text-decoration: none;
+    text-align: center;
 }
 
 .custom-button:hover {
     background-color: rgba(237, 205, 31, 1);
     color: #3D5975;
+    text-decoration: none;
 }
 
 .custom-button-reset {
@@ -206,11 +209,14 @@ textarea {
     display: inline-block;
     width: 15%;
     float: right;
+    text-decoration: none;
+    text-align: center;
 }
 
 .custom-button-reset:hover {
     background-color: #babab9;
     color: #3D5975;
+    text-decoration: none;
 }
 
 .registration-form-required-field {
@@ -354,7 +360,26 @@ textarea {
     margin-top: 5px;
 }
 
+.project-actions-block {
+    padding: 0 15px 15px 15px;
+}
+
+.project-actions-block a {
+    width: 49%;
+    display: inline-block;
+    text-align: center;
+}
+
+.my-projects-block{
+    display: inline-block;
+    vertical-align: top;
+}
+
 @media (min-width: 768px) {
+    .my-projects-block {
+        width: 33%;
+    }
+
     .inv-size-input{
         width: 25% !important;
         display: inline-block;
@@ -403,6 +428,10 @@ textarea {
         display: inline-block;
         padding: 15px;
         vertical-align: top;
+    }
+
+    .my-projects-block div:nth-child(1) {
+        width: 100% !important;
     }
 
     .registration-page {
@@ -503,6 +532,11 @@ textarea {
 }
 
 @media (max-width: 768px) {
+
+    .my-projects-block {
+        width: 100%;
+    }
+
     .follow-star {
         display: inline-block;
         float: right;

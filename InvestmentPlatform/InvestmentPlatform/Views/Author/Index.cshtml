@@ -1,0 +1,58 @@
+﻿@model InvestmentPlatform.Application.ViewModels.AuthorEditViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">YOUR PROFILE</h2>
+<div class="header-separator"></div>
+<br />
+
+<hr class="navigation-top-hr " />
+<div>
+    <div class="profile-navigation-block">
+        <a href="~/Author/Index" class="active-tab"><span>Profile</span></a>
+        <a href="~/Author/Solutions">My Solutions</a>
+        <a href="~/Author/Edit">Settings</a>
+    </div>
+</div>
+<hr class="navigation-bottom-hr " />
+
+<div class="block-text-solution">
+    <p class="location-solution">
+        @Model.City.Country.Name, @Model.City.Name
+    </p>
+
+    <div class="font-solution">
+        <p>
+            <span class="bold-font">First Name: </span>
+            @Model.FirstName
+        </p>
+        <p>
+            <span class="bold-font">Last Name: </span>
+            @Model.LastName
+        </p>
+        <p>
+            <span class="bold-font">Email: </span>
+            @Model.Email
+        </p>
+        <p>
+            <span class="bold-font">Job Title: </span>
+            @Model.JobTitle
+        </p>
+
+        @if (!string.IsNullOrEmpty(Model.Website))
+        {
+            <p>
+                <span class="bold-font">Website:</span>
+                @Model.Website
+        </p>
+        }
+    </div>
+</div>
+
+<div class="image-solution">
+    <img src="~/Content/images/profile/@Model.FileName">
+</div>
+

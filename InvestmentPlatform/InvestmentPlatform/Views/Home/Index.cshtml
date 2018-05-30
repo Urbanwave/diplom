@@ -1,4 +1,6 @@
-﻿@{
+﻿@model InvestmentPlatform.Application.ViewModels.MainPageViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -43,20 +45,20 @@
     <br />
     <br />
     <div class="home-page-solutions-block">
-        @for (int i = 0; i < 3; i++)
+        @foreach (var solution in Model.SolutionViewModels)
         {
-            <a href="#">
+            <a href="~/Solution/View?id=@solution.Id">
                 <div class="home-page-solutions">
                     <div class="home-page-solutions-image">
-                        <img src="~/Content/images/homepage/ny1.jpg">
+                        <img src="~/Content/images/profile/@solution.FileName">
                     </div>
 
                     <div class="home-page-solutions-description">
                         <p class="home-page-solution-title">
-                            Solution title
+                            @solution.Title
                         </p>
                         <p>
-                            I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.
+                            @(solution.SolutionDescription.Length > 90 ? solution.SolutionDescription.Substring(0, 87) + "..." : solution.SolutionDescription)
                         </p>
                     </div>
                 </div>
@@ -66,45 +68,45 @@
     <div class="home-page-statistic-block">
         <div class="home-page-statistic">
             <div class="home-page-statistic-number">
-                2023
+                @Model.SolutionsAmount
             </div>
             <div class="home-page-statistic-text">
-                Year
+                Placed
                 <br />
-                Established
+                Solutions
             </div>
         </div>
 
         <div class="home-page-statistic">
             <div class="home-page-statistic-number">
-                2023
+                @Model.AuthorsAmount
             </div>
             <div class="home-page-statistic-text">
-                Year
+                Registered
                 <br />
-                Established
+                Authors
             </div>
         </div>
 
         <div class="home-page-statistic">
             <div class="home-page-statistic-number">
-                2023
+                @Model.InvestorsAmount
             </div>
             <div class="home-page-statistic-text">
-                Year
+                Registered
                 <br />
-                Established
+                Investors
             </div>
         </div>
 
         <div class="home-page-statistic">
             <div class="home-page-statistic-number">
-                2023
+                @Model.FavouriteSolutionsAmount
             </div>
             <div class="home-page-statistic-text">
-                Year
+                Favourite
                 <br />
-                Established
+                Solutions
             </div>
         </div>
         
