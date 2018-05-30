@@ -1,0 +1,44 @@
+﻿@model InvestmentPlatform.Application.ViewModels.AllSolutionsViewModel
+
+@{
+    ViewBag.Title = "Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">ADMIN PANEL</h2>
+<div class="header-separator"></div>
+<br />
+
+<hr class="navigation-top-hr " />
+<div>
+    <div class="profile-navigation-block">
+        <a href="~/Admin/Projects" class="active-tab">Manage Solutions</a>
+        <a href="~/Admin/Investors">Manage Investors</a>
+        <a href="~/Admin/Authors">Manage Authors</a>
+    </div>
+</div>
+<hr class="navigation-bottom-hr " />
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Solution title</th>
+                <th>View solution</th>
+                <th>Edit solution</th>
+                <th>Delete solution</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var solution in Model.SolutionViewModels)
+            {
+                <tr>
+                    <td>@solution.Title</td>
+                    <td><a href="~/Solution/View?id=@solution.Id">View</a></td>
+                    <td><a href="/Solution/Edit?id=@solution.Id">Edit</a></td>
+                    <td><a href="/Solution/Delete?id=@solution.Id">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

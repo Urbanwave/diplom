@@ -30,7 +30,7 @@ namespace InvestmentPlatform.Application.Interfaces
 
         List<int> GetFavoriteSolutionsByUserId(string id);
 
-        void DeleteSolutionById(int id, string userId);
+        void DeleteSolutionById(int id, string userId, bool isAdmin);
 
         void UpdateSolution(SolutionViewModel solutionViewModel,Solution solution, string pictureName);
     }

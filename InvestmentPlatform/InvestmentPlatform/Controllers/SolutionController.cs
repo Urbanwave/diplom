@@ -44,12 +44,17 @@ namespace InvestmentPlatform.Controllers
             return View(solutionViewModel);
         }
 
-        [Authorize(Roles = "Author")]
+        [Authorize(Roles = "Author, Admin")]
         public ActionResult Delete(int id = 0)
         {
             var userId = User.Identity.GetUserId();
 
-            solutionService.DeleteSolutionById(id, userId);
+            solutionService.DeleteSolutionById(id, userId, User.IsInRole("Admin"));
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Solutions", "Admin");
+            }
 
             return RedirectToAction("Solutions", "Author");
         }
@@ -85,7 +90,7 @@ namespace InvestmentPlatform.Controllers
                 var solutionViewModel = new SolutionViewModel();
 
                 MapSolutionViewModel(solutionViewModel, solution);
-                solution.City.Country = locationService.GetCountryByCityId(solution.CityId);
+                solutionViewModel.City.Country = locationService.GetCountryByCityId(solution.CityId);
                 solutionViewModels.Add(solutionViewModel);
             }
 
@@ -110,7 +115,7 @@ namespace InvestmentPlatform.Controllers
             return View(solutionViewModel);
         }
 
-        [Authorize(Roles = "Author")]
+        [Authorize(Roles = "Author, Admin")]
         public ActionResult Edit(int id = 0)
         {
             var solutionViewModel = new SolutionViewModel();
@@ -133,7 +138,7 @@ namespace InvestmentPlatform.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Author")]
+        [Authorize(Roles = "Author, Admin")]
         public ActionResult Edit(SolutionViewModel solutionViewModel, HttpPostedFileBase file)
         {
             ValidateSolutionModel(solutionViewModel);
@@ -150,6 +155,12 @@ namespace InvestmentPlatform.Controllers
 
                 var solution = solutionService.GetSolutionById(solutionViewModel.Id);
                 solutionService.UpdateSolution(solutionViewModel, solution, pictureName);
+
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Solutions", "Admin");
+                }
+
                 return RedirectToAction("Solutions", "Author");
             }
 

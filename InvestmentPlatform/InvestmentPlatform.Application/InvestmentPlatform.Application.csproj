@@ -76,6 +76,7 @@
     <Compile Include="Services\TypeService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\AllAuthorsViewModel.cs" />
     <Compile Include="ViewModels\AllInvestorsViewModel.cs" />
     <Compile Include="ViewModels\AllSolutionsViewModel.cs" />
     <Compile Include="ViewModels\AuthorEditViewModel.cs" />

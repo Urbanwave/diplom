@@ -7,17 +7,20 @@
 <div class="header-block-solution">
     <div>
         <h2 class="header-page-solution inline-display">@Model.Title</h2>
-        @if (Model.IsFollowed)
+        @if (User.IsInRole("Investor"))
         {
-            <a class="follow-star" href="~/Solution/Follow?id=@Model.Id">
-                <img src="~/Content/images/homepage/checkedstar.png" />
-            </a>
-        }
-        else
-        {
-            <a class="follow-star" href="~/Solution/Follow?id=@Model.Id">
-                <img src="~/Content/images/homepage/uncheckedstar.png" />
-            </a>
+            if (Model.IsFollowed)
+            {
+                <a class="follow-star" href="~/Solution/Follow?id=@Model.Id">
+                    <img src="~/Content/images/homepage/checkedstar.png" />
+                </a>
+            }
+            else
+            {
+                <a class="follow-star" href="~/Solution/Follow?id=@Model.Id">
+                    <img src="~/Content/images/homepage/uncheckedstar.png" />
+                </a>
+            }
         }
         <div class="header-separator-solution"></div>
     </div>

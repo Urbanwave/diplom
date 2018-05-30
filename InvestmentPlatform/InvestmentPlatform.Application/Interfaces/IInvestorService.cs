@@ -14,5 +14,7 @@ namespace InvestmentPlatform.Application.Interfaces
         int GetInvestorsCount();
 
         ApplicationUser GetInvestorById(string id);
+
+        void DeleteInvestorById(string id);
     }
 }

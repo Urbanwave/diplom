@@ -1,0 +1,46 @@
+﻿@model InvestmentPlatform.Application.ViewModels.AllAuthorsViewModel
+
+@{
+    ViewBag.Title = "Authors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="header-page">ADMIN PANEL</h2>
+<div class="header-separator"></div>
+<br />
+
+<hr class="navigation-top-hr " />
+<div>
+    <div class="profile-navigation-block">
+        <a href="~/Admin/Projects">Manage Solutions</a>
+        <a href="~/Admin/Investors">Manage Investors</a>
+        <a href="~/Admin/Authors" class="active-tab">Manage Authors</a>
+    </div>
+</div>
+<hr class="navigation-bottom-hr " />
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Job Title</th>
+                <th>View Author</th>
+                <th>Delete Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in Model.AuthorViewModels)
+            {
+                <tr>
+                    <td>@author.FirstName</td>
+                    <td>@author.LastName</td>
+                    <td>@author.JobTitle</td>
+                    <td><a href="/Author/View?id=@author.Id">View</a></td>
+                    <td><a href="/Author/Delete?id=@author.Id">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

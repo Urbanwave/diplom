@@ -50,6 +50,29 @@ namespace InvestmentPlatform.Controllers
             return View(authorViewModel);
         }
 
+        public ActionResult View(string id)
+        {
+            var authorViewModel = new AuthorEditViewModel();
+
+            var author = authorService.GetAuthorById(id);
+
+            if (author != null)
+            {
+                MapRegisterAuthorViewModel(authorViewModel, author);
+                authorViewModel.City.Country = locationService.GetCountryByCityId(author.CityId);
+            }
+
+            return View(authorViewModel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id)
+        {
+            authorService.DeleteAuthorById(id);
+
+            return RedirectToAction("Authors", "Admin");
+        }
+
         [Authorize(Roles = "Author")]
         public ActionResult Solutions(int page = 1)
         {

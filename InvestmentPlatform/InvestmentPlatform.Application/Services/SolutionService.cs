@@ -87,10 +87,10 @@ namespace InvestmentPlatform.Application.Services
             return db.FavoriteSolutions.Where(x => x.FollowedUserId == id).Select(x => x.FollowedSolutionId).ToList();
         }
 
-        public void DeleteSolutionById(int id, string userId)
+        public void DeleteSolutionById(int id, string userId, bool isAdmin)
         {
             var solution = GetSolutionById(id);
-            if (solution.UserId == userId)
+            if (solution.UserId == userId || isAdmin)
             {
                 db.Solutions.Remove(solution);
                 db.SaveChanges();
@@ -99,6 +99,7 @@ namespace InvestmentPlatform.Application.Services
 
         public void UpdateSolution(SolutionViewModel solutionViewModel, Solution solution, string pictureName)
         {
+            solution.Title = solutionViewModel.Title;
             solution.CityId = solutionViewModel.CityId;
             solution.CurrencyId = solutionViewModel.CurrencyId;
             solution.InvestmentSize = solutionViewModel.InvestmentSize;
@@ -106,16 +107,16 @@ namespace InvestmentPlatform.Application.Services
             solution.LogoFileName = string.IsNullOrEmpty(pictureName) ? solution.LogoFileName : pictureName;
             solution.SolutionDescription = solutionViewModel.SolutionDescription;
 
-            solution.SolutionTypes.Clear();
-            solution.Industries.Clear();
+            //solution.SolutionTypes.Clear();
+            //solution.Industries.Clear();
 
-            solution.SolutionTypes = typeService.GetSolutionTypesByIds(solutionViewModel.SelectedSolutionTypes);
+            //solution.SolutionTypes = typeService.GetSolutionTypesByIds(solutionViewModel.SelectedSolutionTypes);
             //solution.Industries = typeService.GetIndustriesByIds(solutionViewModel.SelectedIndustries);
 
-            foreach (var solutionType in solution.SolutionTypes)
-            {
-                db.Entry(solutionType).State = EntityState.Unchanged;
-            }
+            //foreach (var solutionType in solution.SolutionTypes)
+            //{
+            //    db.Entry(solutionType).State = EntityState.Unchanged;
+            //}
 
             //foreach (var industry in solution.Industries)
             //{

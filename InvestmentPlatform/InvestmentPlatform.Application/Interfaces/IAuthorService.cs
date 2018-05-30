@@ -9,6 +9,10 @@ namespace InvestmentPlatform.Application.Interfaces
 {
     public interface IAuthorService
     {
+        List<ApplicationUser> GetAllAuthors(int page, int pageSize);
+
         ApplicationUser GetAuthorById(string id);
+
+        void DeleteAuthorById(string id);
     }
 }

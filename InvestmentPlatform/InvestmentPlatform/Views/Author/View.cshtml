@@ -1,0 +1,55 @@
+﻿@model InvestmentPlatform.Application.ViewModels.AuthorEditViewModel
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header-block-solution">
+    <div>
+        <h2 class="header-page-solution">@Model.JobTitle</h2>
+        <div class="header-separator-solution"></div>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="block-text-solution">
+    <p class="location-solution">
+        @Model.City.Country.Name, @Model.City.Name
+    </p>
+
+    <div class="font-solution">
+        <p>
+            <span class="bold-font">First Name: </span>
+            @Model.FirstName
+        </p>
+        <p>
+            <span class="bold-font">Last Name: </span>
+            @Model.LastName
+        </p>
+        <p>
+            <span class="bold-font">Email: </span>
+            @Model.Email
+        </p>
+        <p>
+            <span class="bold-font">Job Title: </span>
+            @Model.JobTitle
+        </p>
+
+        @if (!string.IsNullOrEmpty(Model.Website))
+        {
+            <p>
+                <span class="bold-font">Website:</span>
+                @Model.Website
+            </p>
+        }
+    </div>
+</div>
+
+<div class="image-solution">
+    <img src="~/Content/images/profile/@Model.FileName">
+</div>
+
+
+

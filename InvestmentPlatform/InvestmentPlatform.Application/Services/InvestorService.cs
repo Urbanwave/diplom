@@ -29,11 +29,18 @@ namespace InvestmentPlatform.Application.Services
             var roleId = db.Roles.Where(x => x.Name == "Investor").Select(x => x.Id).First();
             return db.Users.Where(x => x.Roles.Select(z => z.RoleId).Contains(roleId)).Count();
         }
+
         public ApplicationUser GetInvestorById(string id)
         {
             var roleId = db.Roles.Where(x => x.Name == "Investor").Select(x => x.Id).First();
             return db.Users.Where(x => x.Roles.Select(z => z.RoleId).Contains(roleId) && x.Id == id).Include("City").Include("Industries").Include("Currency").First();
         }
 
+        public void DeleteInvestorById(string id)
+        {
+            var investor = GetInvestorById(id);
+            db.Users.Remove(investor);
+            db.SaveChanges();
+        }
     }
 }

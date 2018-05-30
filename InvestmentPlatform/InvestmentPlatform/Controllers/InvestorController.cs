@@ -48,6 +48,14 @@ namespace InvestmentPlatform.Controllers
             return View(investorViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id)
+        {
+            investorService.DeleteInvestorById(id);
+
+            return RedirectToAction("Investors", "Admin");
+        }
+
         [Authorize(Roles = "Investor")]
         public ActionResult FavoriteSolutions(int page = 1)
         {
@@ -115,7 +123,7 @@ namespace InvestmentPlatform.Controllers
                 var investorViewModel = new InvestorViewModel();
 
                 MapInvestorViewModel(investorViewModel, investor);
-                investor.City.Country = locationService.GetCountryByCityId(investor.CityId);
+                investorViewModel.City.Country = locationService.GetCountryByCityId(investor.CityId);
                 investorViewModels.Add(investorViewModel);
             }
 
@@ -182,7 +190,7 @@ namespace InvestmentPlatform.Controllers
             if (investor != null)
             {
                 MapInvestorViewModel(investorViewModel, investor);
-                investor.City.Country = locationService.GetCountryByCityId(investor.CityId);
+                investorViewModel.City.Country = locationService.GetCountryByCityId(investor.CityId);
             }
 
             return View(investorViewModel);

@@ -14,6 +14,10 @@ namespace InvestmentPlatform.Application.ViewModels
 
         public string CompanyName { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string CompanyDescription { get; set; }
 
         public City City { get; set; }

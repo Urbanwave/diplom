@@ -15,6 +15,10 @@
             {
                 <a href="~/Author/Index">Your profile</a>
             }
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="~/Admin/Solutions">Manage site</a>
+            }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
