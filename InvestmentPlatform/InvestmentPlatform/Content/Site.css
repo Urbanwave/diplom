@@ -490,11 +490,12 @@ textarea {
         margin-top: 45px;
     }
 
-    .header-page-solution { 
+    .header-page-solution {
         color: #C6C6C6;
         font-size: 55px;
         letter-spacing: 0.05em;
         margin-top: 45px;
+        width: 90%;
     }
 
     .header-separator-solution {

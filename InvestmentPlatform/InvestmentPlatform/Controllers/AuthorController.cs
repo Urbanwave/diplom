@@ -210,7 +210,7 @@ namespace InvestmentPlatform.Controllers
         private void MapSolutionViewModel(SolutionViewModel solutionViewModel, Solution solution)
         {
             solutionViewModel.Currency = solution.Currency;
-            solutionViewModel.FileName = solution.LogoFileName;
+            solutionViewModel.FileName = !string.IsNullOrEmpty(solution.LogoFileName) ? solution.LogoFileName : "solutiondefault.png";
             solutionViewModel.Id = solution.Id;
             solutionViewModel.City = solution.City;
             solutionViewModel.CityId = solution.CityId;

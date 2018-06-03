@@ -36,7 +36,7 @@ namespace InvestmentPlatform.Controllers
 
                 solutionViewModel.Id = solution.Id;
                 solutionViewModel.Title = solution.Title;
-                solutionViewModel.FileName = solution.LogoFileName;
+                solutionViewModel.FileName = !string.IsNullOrEmpty(solution.LogoFileName) ? solution.LogoFileName : "solutiondefault.png";
                 solutionViewModel.SolutionDescription = solution.SolutionDescription;
                 solutionViewModels.Add(solutionViewModel);
             }

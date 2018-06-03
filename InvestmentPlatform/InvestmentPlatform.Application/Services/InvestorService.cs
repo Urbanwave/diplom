@@ -39,6 +39,8 @@ namespace InvestmentPlatform.Application.Services
         public void DeleteInvestorById(string id)
         {
             var investor = GetInvestorById(id);
+            var favoriteSolutions = db.FavoriteSolutions.Where(x => x.FollowedUserId == id);
+            db.FavoriteSolutions.RemoveRange(favoriteSolutions);
             db.Users.Remove(investor);
             db.SaveChanges();
         }
