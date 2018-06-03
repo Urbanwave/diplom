@@ -29,5 +29,9 @@ namespace InvestmentPlatform.Application.ViewModels
         public string FileName { get; set; }
 
         public List<Industry> Industries { get; set; }
+
+        public string Email { get; set; }
+
+        public string Website { get; set; }
     }
 }

@@ -23,7 +23,8 @@ namespace InvestmentPlatform.Application.Services
 
         public List<Solution> GetAllSolutions(int page, int pageSize)
         {
-            return db.Solutions.Include("City").Include("Currency").Include("ImplementationStatus")
+            return db.Solutions.Include("City").Include("Currency").Include("ImplementationStatus").Include("User")
+                .Include("Industries").Include("SolutionTypes")
                 .OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
@@ -40,7 +41,7 @@ namespace InvestmentPlatform.Application.Services
 
         public Solution GetSolutionById(int id)
         {
-            return db.Solutions.Include("Industries").Include("SolutionTypes").Include("City").Include("Currency").Include("ImplementationStatus").Where(x => x.Id == id).FirstOrDefault();
+            return db.Solutions.Include("Industries").Include("SolutionTypes").Include("User").Include("City").Include("Currency").Include("ImplementationStatus").Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void AddSolution(Solution solution)

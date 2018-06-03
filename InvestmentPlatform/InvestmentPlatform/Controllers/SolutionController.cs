@@ -4,6 +4,7 @@ using InvestmentPlatform.Application.ViewModels;
 using InvestmentPlatform.Domain.Models;
 using InvestmentPlatform.Models;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,30 +60,91 @@ namespace InvestmentPlatform.Controllers
             return RedirectToAction("Solutions", "Author");
         }
 
-        public ActionResult All(string searchString = "", int page = 1)
+        public ActionResult Filter(AllSolutionsViewModel model, string sortBy, string sortDestination,
+            string searchString = "", int page = 1, bool firstShown = false)
         {
-            int pageSize = 3;
-            var allSolutionViewModel = new AllSolutionsViewModel();
-
-            allSolutionViewModel.Countries = locationService.GetAllCountries();
-            allSolutionViewModel.Cities = locationService.GetAllCities();
-            allSolutionViewModel.Industries = typeService.GetAllIndustries();
-            allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses();
-            allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
-
-            var projectAmount = solutionService.GetSolutionsAmount();
-            allSolutionViewModel.AllProjectsCount = projectAmount;
-
-            if (projectAmount % pageSize > 0)
+            if (page == 0)
             {
-                allSolutionViewModel.ProjectAmount = projectAmount / pageSize + 1;
-            } else
-            {
-                allSolutionViewModel.ProjectAmount = projectAmount / pageSize;
+                page = 1;
             }
 
-            var solutions = solutionService.GetAllSolutions(page, pageSize).Where(x => x.SolutionDescription.Contains(searchString)
-            || x.Title.Contains(searchString) || x.Currency.Name.Contains(searchString) );
+            ViewBag.SearchString = searchString;
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortDestination = sortDestination;
+
+            if (model != null && !firstShown)
+            {
+                TempData["Filter"] = model;
+            } else
+            if (TempData["Filter"] != null)
+            {
+                model = (AllSolutionsViewModel)TempData["Filter"];
+            }
+
+            int pageSize = 6;
+
+            if(model.ToInvestmentSize == 0 && model.FromInvestmentSize == 0)
+            {
+                model.ToInvestmentSize = int.MaxValue;
+            }
+            else
+            if (model.ToInvestmentSize == 0 && model.FromInvestmentSize != 0)
+            {
+                model.ToInvestmentSize = int.MaxValue;
+            }
+
+            var countriesCities = locationService.GetCountriesCityIds(model.SelectedCountries);
+            model.SelectedCities = model.SelectedCities.Union(countriesCities).ToList();
+
+            var solutions = solutionService.GetAllSolutions(1, int.MaxValue).Where(x => (x.SolutionDescription.Contains(searchString)
+            || x.Title.Contains(searchString) || x.Currency.Name.Contains(searchString))
+            && x.InvestmentSize > model.FromInvestmentSize && x.InvestmentSize < model.ToInvestmentSize);
+            
+            if(model.SelectedCities.Count > 0)
+            {
+                solutions = solutions.Where(x => model.SelectedCities.Contains(x.CityId));
+            }
+
+            if (model.SelectedSolutionStatuses.Count > 0)
+            {
+                solutions = solutions.Where(x => model.SelectedSolutionStatuses.Contains(x.ImplementationStatusId));
+            }
+
+            if (model.SelectedSolutionTypes.Count > 0)
+            {
+                solutions = solutions.Where(x => x.SolutionTypes.Any(y => model.SelectedSolutionTypes.Contains(y.Id)));
+            }
+
+            if (model.SelectedIndustries.Count > 0)
+            {
+                solutions = solutions.Where(x => x.Industries.Any(y => model.SelectedIndustries.Contains(y.Id)));
+            }
+
+            if(sortBy == "date")
+            {
+                if (sortDestination == "up")
+                {
+                    solutions = solutions.OrderBy(x => x.DateCreated);
+                }
+                else
+                {
+                    solutions = solutions.OrderByDescending(x => x.DateCreated);
+                }
+            } else
+            if(sortBy == "investmentSize")
+            {
+                if (sortDestination == "up")
+                {
+                    solutions = solutions.OrderBy(x => x.InvestmentSize);
+                }
+                else
+                {
+                    solutions = solutions.OrderByDescending(x => x.InvestmentSize);
+                }
+            }
+
+            ViewBag.SolutionsAmount = solutions.Count();
+
             var solutionViewModels = new List<SolutionViewModel>();
 
             foreach (var solution in solutions)
@@ -94,7 +156,18 @@ namespace InvestmentPlatform.Controllers
                 solutionViewModels.Add(solutionViewModel);
             }
 
-            allSolutionViewModel.SolutionViewModels = solutionViewModels;
+            return PartialView(solutionViewModels.ToPagedList(page, pageSize));
+        }
+
+        public ActionResult All()
+        {
+            var allSolutionViewModel = new AllSolutionsViewModel();
+
+            allSolutionViewModel.Countries = locationService.GetAllCountries().OrderBy(x => x.Name).ToList(); ;
+            allSolutionViewModel.Cities = locationService.GetAllCities().OrderBy(x => x.Name).ToList();
+            allSolutionViewModel.Industries = typeService.GetAllIndustries();
+            allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses();
+            allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
 
             return View(allSolutionViewModel);
         }
@@ -131,6 +204,7 @@ namespace InvestmentPlatform.Controllers
                     solutionViewModel.City.Country = locationService.GetCountryByCityId(solution.CityId);
                     solutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
                     solutionViewModel.Industries = typeService.GetAllIndustries();
+                    solutionViewModel.FileName = "../Content/Images/profile/" + solution.LogoFileName;
                 }
             }
 
@@ -142,17 +216,19 @@ namespace InvestmentPlatform.Controllers
         public ActionResult Edit(SolutionViewModel solutionViewModel, HttpPostedFileBase file)
         {
             ValidateSolutionModel(solutionViewModel);
+
+            var pictureName = string.Empty;
+
+            if (file != null)
+            {
+                pictureName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                file.SaveAs(path);
+                solutionViewModel.FileName = "../Content/Images/profile/" + pictureName;
+            }
+
             if (ModelState.IsValid)
             {
-                var pictureName = string.Empty;
-
-                if (file != null)
-                {
-                    pictureName = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
-                    file.SaveAs(path);
-                }
-
                 var solution = solutionService.GetSolutionById(solutionViewModel.Id);
                 solutionService.UpdateSolution(solutionViewModel, solution, pictureName);
 
@@ -172,17 +248,19 @@ namespace InvestmentPlatform.Controllers
         public ActionResult Save(SolutionViewModel solutionViewModel, HttpPostedFileBase file)
         {
             ValidateSolutionModel(solutionViewModel);
+
+            var pictureName = string.Empty;
+
+            if (file != null)
+            {
+                pictureName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                file.SaveAs(path);
+                solutionViewModel.FileName = "../Content/Images/profile/" + pictureName;
+            }
+
             if (ModelState.IsValid)
             {
-                var pictureName = string.Empty;
-
-                if (file != null)
-                {
-                    pictureName = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
-                    file.SaveAs(path);
-                }
-
                 var solution = new Solution()
                 {
                     CityId = solutionViewModel.CityId,
@@ -193,7 +271,8 @@ namespace InvestmentPlatform.Controllers
                     SolutionDescription = solutionViewModel.SolutionDescription,
                     Title = solutionViewModel.Title,
                     UniqueInfo = solutionViewModel.UniqueInfo,  
-                    UserId = User.Identity.GetUserId()
+                    UserId = User.Identity.GetUserId(),
+                    DateCreated = DateTime.Now
                 };
 
                 solution.SolutionTypes.Clear();
@@ -285,6 +364,8 @@ namespace InvestmentPlatform.Controllers
             solutionViewModel.Industries = solution.Industries;
             solutionViewModel.SolutionTypes = solution.SolutionTypes;
             solutionViewModel.ImplementationStatus = solution.ImplementationStatus;
+            solutionViewModel.Email = solution.User.Email;
+            solutionViewModel.DateCreated = solution.DateCreated;
 
             var userId = User.Identity.GetUserId();
             var favoriteSolution = solutionService.GetAllFavoriteSolutionsByUserId(userId);

@@ -18,5 +18,7 @@ namespace InvestmentPlatform.Application.Interfaces
         int GetCountryIdByCityId(int cityId);
 
         Country GetCountryByCityId(int cityId);
+
+        List<int> GetCountriesCityIds(List<int> countriesIds);
     }
 }

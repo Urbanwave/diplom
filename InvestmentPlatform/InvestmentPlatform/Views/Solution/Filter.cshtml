@@ -1,0 +1,37 @@
+﻿@model PagedList.IPagedList<InvestmentPlatform.Models.SolutionViewModel>
+@using PagedList.Mvc;
+
+<div id="filteredSolutions">
+    <div class="header-search-results">
+        <p>@ViewBag.SolutionsAmount results</p>
+    </div>
+
+    <div class="home-page-solutions-block">
+        @foreach (var solution in Model)
+        {
+            <a href="~/Solution/View?id=@solution.Id">
+                <div class="home-page-solutions">
+                    <div class="home-page-solutions-image">
+                        <img src="~/Content/images/profile/@solution.FileName">
+                    </div>
+
+                    <div class="home-page-solutions-description">
+                        <p class="home-page-solution-title">
+                            @solution.Title
+                        </p>
+                        <p>
+                            @(solution.SolutionDescription.Length > 90 ? solution.SolutionDescription.Substring(0, 87) + "..." : solution.SolutionDescription)
+                        </p>
+                        <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
+                        <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize @solution.Currency.Name</p>
+                    </div>
+                </div>
+            </a>
+        }
+
+    </div>
+    <div class="pagination-block">
+        @Html.PagedListPager(Model, page => Url.Action("Filter", "Solution",
+    new { page, searchString = ViewBag.SearchString, firstShown = true, sortBy = ViewBag.SortBy, sortDestination  = ViewBag.SortDestination }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "results" }))
+    </div>
+</div>

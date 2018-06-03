@@ -1,4 +1,25 @@
 ﻿$(document).ready(function () {
+    $('#uploadImage').click(function (e) {
+        e.preventDefault();
+        $('#file').click();
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#loadedImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#file").change(function () {
+        readURL(this);
+    });
+
     $.getJSON('/location/GetCountries', null, function (data) {
         $.each(data, function () {
             $('#country').append('<option value=' +

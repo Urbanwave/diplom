@@ -1,4 +1,4 @@
-﻿@model InvestmentPlatform.Application.ViewModels.AllInvestorsViewModel 
+﻿@model InvestmentPlatform.Application.ViewModels.AllInvestorsViewModel
 @{
     ViewBag.Title = "All";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,6 +9,92 @@
 <br />
 <br />
 <br />
+
+@using (Ajax.BeginForm("Filter", "Investor", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <div class="search-block-solutions">
+        <div>
+            <div class="search-label">
+                Search by parameters
+            </div>
+            <div class="search-parameters-row">
+                <div class="filter-block">
+                    <div id="industries-dropdown" class="sectors-dropdown">Industries<i class="fa fa-sort-down" style="float: right;"></i></div>
+                    <div id="industries-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.Industries)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedIndustries"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <div id="countries-dropdown" class="sectors-dropdown">Countries<i class="fa fa-sort-down" style="float: right;"></i></div>
+                    <div id="countries-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.Countries)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedCountries"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <div id="cities-dropdown" class="sectors-dropdown">Cities<i class="fa fa-sort-down" style="float: right;"></i></div>
+                    <div id="cities-block" class="checkboxes-block" style="display: none">
+                        @foreach (var item in Model.Cities)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="SelectedCities"
+                                           value="@item.Id" /> @item.Name
+                                    </label>
+                                </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="search-parameters-row">
+                <div>
+                    <input id="searchString" name="searchString" class="form-control" placeholder="Search..." style="display: inline-block; vertical-align: top;" />
+                    <div style="display: inline-block; width: calc(100% - 320px);">
+                        <input style="float: right;" class="custom-button" type="submit" value="FIND" />
+                    </div>
+                    @*<input class="custom-button-reset" type="button" value="Reset" />*@
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group sort-block ">
+    <label class="control-label" style="margin-top: 5px; float: left; margin-left: 15px;">Sort:</label>
+    <div class="col-md-2">
+        <select id="sortBy" class="form-control">
+            <option value="date" selected>by date</option>
+            <option value="investmentSize">by investment size</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select id="sortDestination" class="form-control">
+            <option value="up" selected>ascending</option>
+            <option value="down">descending</option>
+        </select>
+    </div>
+</div>
+
+<div id="results">
+</div>
 
 <div class="home-page-solutions-block">
     @foreach (var investor in Model.InvestorViewModels)
@@ -33,7 +119,7 @@
                     <div>
                         <i class="fa fa-2x fa-crosshairs blue-text"></i>
                         <div class="list-block-solution">
-                            @string.Join(", ", investor.Industries.Select(x  => x.Name))
+                            @string.Join(", ", investor.Industries.Select(x => x.Name))
                         </div>
                     </div>
 
@@ -44,35 +130,41 @@
     }
 
 </div>
-<div class="pagination-block">
-    <ul class="pagination">
-        @for (int i = 1; i <= Model.ProjectAmount; i++)
-        {
-            <li class="page-item"><a class="page-link" href="~/Investor/All?page=@i">@i</a></li>
-        }
-    </ul>
-</div>
-
 
 <script type="text/javascript">
     $(document).ready(function () {
-        function getParameterByName(name) {
-            var regexS = "[\\?&]" + name + "=([^&#]*)",
-                regex = new RegExp(regexS),
-                results = regex.exec(window.location.search);
-            if (results == null) {
-                return "";
+        $('#results').load('/Investor/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val());
+
+        $("#sortBy").change(function () {
+            $('#results').load('/Investor/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+        });
+
+        $("#sortDestination").change(function () {
+            $('#results').load('/Investor/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+        });
+
+        $("#cities-dropdown").click(function () {
+            if ($("#cities-block").css('display') == 'none') {
+                $("#cities-block").show();
             } else {
-                return decodeURIComponent(results[1].replace(/\+/g, " "));
+                $("#cities-block").hide();
             }
-        }
+        });
 
-        var page = getParameterByName("page");
+        $("#countries-dropdown").click(function () {
+            if ($("#countries-block").css('display') == 'none') {
+                $("#countries-block").show();
+            } else {
+                $("#countries-block").hide();
+            }
+        });
 
-        if (page != '') {
-            $(".page-link:contains('" + page + "')").focus();
-        } else {
-            $(".page-link:contains('1')").focus();
-        }
+        $("#industries-dropdown").click(function () {
+            if ($("#industries-block").css('display') == 'none') {
+                $("#industries-block").show();
+            } else {
+                $("#industries-block").hide();
+            }
+        });
     });
 </script>

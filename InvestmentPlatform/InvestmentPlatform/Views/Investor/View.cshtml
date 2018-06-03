@@ -15,7 +15,7 @@
 
 <div class="block-text-solution">
     <p class="location-solution">
-        @Model.City.Country.Name, @Model.City.Name
+        <i class="fa fa-map-marker" style="margin-right: 5px;"></i>@Model.City.Country.Name, @Model.City.Name
     </p>
 
     <div class="font-solution">
@@ -24,23 +24,38 @@
             @Model.CompanyDescription
         </p>
 
-        <div>
-            <p class="list-name-solution">
-                <span class="bold-font">Investment sectors:</span>
+        @if (!string.IsNullOrEmpty(Model.Website))
+        {
+            <p>
+                <span class="bold-font">Website:</span>
+                @Model.Website
             </p>
-            <div class="list-block-solution">
-                @foreach (var industry in Model.Industries)
-                {
-                    <p>
-                        @industry.Name
-                    </p>
-                }
+        }
+
+        <div class="solution-sectros-block ">
+            <div>
+                <p class="list-name-solution">
+                    <span class="bold-font">Investment sectors:</span>
+                </p>
+                <div class="list-block-solution">
+                    @foreach (var industry in Model.Industries)
+                    {
+                        <p>
+                            @industry.Name
+                        </p>
+                    }
+                </div>
             </div>
         </div>
 
-         <p>
+        <p>
             <span class="bold-font">Investment size:</span>
             @Model.InvestmentSize @Model.Currency.Name
+        </p>
+
+        <p>
+            <span class="bold-font">Email for contact:</span>
+            @Model.Email
         </p>
     </div>
 </div>

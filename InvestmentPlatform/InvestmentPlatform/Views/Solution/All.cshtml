@@ -11,14 +11,16 @@
 <br />
 <br />
 
-<div class="search-block-solutions">
-    <div>
-        <div class="search-label">
-            Search by parameters
-        </div>
+@using (Ajax.BeginForm("Filter", "Solution", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <div class="search-block-solutions">
+        <div>
+            <div class="search-label">
+                Search by parameters
+            </div>
             <div class="search-parameters-row">
                 <div class="filter-block">
-                    <div id="industries-dropdown" class="sectors-dropdown">Industries</div>
+                    <div id="industries-dropdown" class="sectors-dropdown">Industries<i class="fa fa-sort-down" style="float: right;"></i></div>
                     <div id="industries-block" class="checkboxes-block" style="display: none">
                         @foreach (var item in Model.Industries)
                         {
@@ -33,7 +35,7 @@
                     </div>
                 </div>
                 <div class="filter-block">
-                    <div id="countries-dropdown" class="sectors-dropdown">Countries</div>
+                    <div id="countries-dropdown" class="sectors-dropdown">Countries<i class="fa fa-sort-down" style="float: right;"></i></div>
                     <div id="countries-block" class="checkboxes-block" style="display: none">
                         @foreach (var item in Model.Countries)
                         {
@@ -48,7 +50,7 @@
                     </div>
                 </div>
                 <div class="filter-block">
-                    <div id="cities-dropdown" class="sectors-dropdown">Cities</div>
+                    <div id="cities-dropdown" class="sectors-dropdown">Cities<i class="fa fa-sort-down" style="float: right;"></i></div>
                     <div id="cities-block" class="checkboxes-block" style="display: none">
                         @foreach (var item in Model.Cities)
                         {
@@ -65,7 +67,7 @@
             </div>
             <div class="search-parameters-row">
                 <div class="filter-block">
-                    <div id="solutiontypes-dropdown" class="sectors-dropdown">Kinds of solution</div>
+                    <div id="solutiontypes-dropdown" class="sectors-dropdown">Kinds of solution<i class="fa fa-sort-down" style="float: right;"></i></div>
                     <div id="solutiontypes-block" class="checkboxes-block" style="display: none">
                         @foreach (var item in Model.SolutionTypes)
                         {
@@ -80,7 +82,7 @@
                     </div>
                 </div>
                 <div class="filter-block">
-                    <div id="solutionstatuses-dropdown" class="sectors-dropdown">Solution statuses</div>
+                    <div id="solutionstatuses-dropdown" class="sectors-dropdown">Solution statuses<i class="fa fa-sort-down" style="float: right;"></i></div>
                     <div id="solutionstatuses-block" class="checkboxes-block" style="display: none">
                         @foreach (var item in Model.ImplementationStatuses)
                         {
@@ -96,79 +98,55 @@
                 </div>
                 <div class="filter-block">
                     <div id="investmentsize-dropdown" class="sectors-dropdown">Investment size</div>
-                    <div id="investmentsize-block" class="checkboxes-block" style="display: none">
-                        From <input/> To <input />
+                    <div id="investmentsize-block" class="checkboxes-block" style="display: none; padding-bottom: 12px; padding-top: 5px;">
+                        From <input class="form-control" type="number" min="0" max="2000000000" step="1" name="FromInvestmentSize"/> 
+                        To <input class="form-control" type="number" min="0" max="2000000000" step="1" name="ToInvestmentSize"/>
                     </div>
                 </div>
             </div>
             <div class="search-parameters-row">
                 <div>
-                    <input class="form-control search-input-solutions" placeholder="Search..." />
-                    <a class="custom-button" href="~/Solution/All">Find</a>
-                    <input class="custom-button-reset" type="button" value="Reset" />
+                    <input id="searchString" name="searchString" class="form-control" placeholder="Search..." style="display: inline-block; vertical-align: top;"/>
+                    <div style="display: inline-block; width: calc(100% - 320px);">
+                        <input style="float: right;" class="custom-button" type="submit" value="FIND" />
+                    </div>
+                    @*<input class="custom-button-reset" type="button" value="Reset" />*@
                 </div>
             </div>
         </div>
+    </div>
+}
+
+<div class="form-group sort-block ">
+    <label class="control-label" style="margin-top: 5px; float: left; margin-left: 15px;">Sort:</label>
+    <div class="col-md-2">
+        <select id="sortBy" class="form-control">
+            <option value="date" selected>by date</option>
+            <option value="investmentSize">by investment size</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select id="sortDestination" class="form-control">
+            <option value="up" selected>ascending</option>
+            <option value="down">descending</option>
+        </select>
+    </div>
 </div>
 
-<div class="header-search-results">
-    <h2>Solutions</h2>
-    <p>@Model.AllProjectsCount results</p>
-</div>
-
-<div class="home-page-solutions-block">
-    @foreach (var solution in Model.SolutionViewModels)
-    {
-        <a href="~/Solution/View?id=@solution.Id">
-            <div class="home-page-solutions">
-                <div class="home-page-solutions-image">
-                    <img src="~/Content/images/profile/@solution.FileName">
-                </div>
-
-                <div class="home-page-solutions-description">
-                    <p class="home-page-solution-title">
-                        @solution.Title
-                    </p>
-                    <p>
-                        @(solution.SolutionDescription.Length > 90 ? solution.SolutionDescription.Substring(0, 87) + "..." : solution.SolutionDescription)
-                    </p>
-                    <p><span class="blue-text bold-font">Location: </span>@solution.City.Country.Name, @solution.City.Name</p>
-                    <p><span class="blue-text bold-font">Investment size: </span>@solution.InvestmentSize @solution.Currency.Name</p>
-                </div>
-            </div>
-        </a>
-    }
-
-</div>
-<div class="pagination-block">
-    <ul class="pagination">
-        @for (int i = 1; i <= Model.ProjectAmount; i++)
-        {
-            <li class="page-item"><a class="page-link" href="~/Solution/All?page=@i">@i</a></li>
-        }
-    </ul>
+<div id="results">
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        function getParameterByName(name) {
-            var regexS = "[\\?&]" + name + "=([^&#]*)",
-                regex = new RegExp(regexS),
-                results = regex.exec(window.location.search);
-            if (results == null) {
-                return "";
-            } else {
-                return decodeURIComponent(results[1].replace(/\+/g, " "));
-            }
-        }
+        $('#results').load('/Solution/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val());
 
-        var page = getParameterByName("page");
+        $("#sortBy").change(function () {
+            $('#results').load('/Solution/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+        });
 
-        if (page != '') {
-            $(".page-link:contains('" + page + "')").focus();
-        } else {
-            $(".page-link:contains('1')").focus();
-        }
+        $("#sortDestination").change(function () {
+            $('#results').load('/Solution/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+        });
 
         $("#cities-dropdown").click(function () {
             if ($("#cities-block").css('display') == 'none') {

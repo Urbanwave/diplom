@@ -1,0 +1,45 @@
+﻿@model PagedList.IPagedList<InvestmentPlatform.Application.ViewModels.InvestorViewModel>
+@using PagedList.Mvc;
+
+<div class="header-search-results">
+    <p>@ViewBag.InvestorsAmount results</p>
+</div>
+
+<div class="home-page-solutions-block">
+    @foreach (var investor in Model)
+    {
+        <a href="~/Investor/View?id=@investor.Id">
+            <div class="home-page-solutions">
+                <div class="home-page-solutions-image">
+                    <img src="~/Content/images/profile/@investor.FileName">
+                </div>
+                <div class="home-page-solutions-description">
+                    <p class="home-page-solution-title">
+                        @investor.CompanyName
+                    </p>
+                    @if (!string.IsNullOrEmpty(investor.CompanyDescription))
+                    {
+                        <p>
+                            @(investor.CompanyDescription.Length > 90 ? investor.CompanyDescription.Substring(0, 87) + "..." : investor.CompanyDescription)
+                        </p>
+                    }
+                    <p><span class="blue-text bold-font">Location: </span>@investor.City.Country.Name, @investor.City.Name</p>
+
+                    <div>
+                        <p>
+                            <span class="blue-text bold-font">Investment sectors: </span>
+                                @string.Join(", ", investor.Industries.Select(x => x.Name))
+                        </p>
+                    </div>
+
+                    <p><span class="blue-text bold-font">Investment size: </span>@investor.InvestmentSize @investor.Currency.Name</p>
+                </div>
+            </div>
+        </a>
+    }
+    <div class="pagination-block">
+        @Html.PagedListPager(Model, page => Url.Action("Filter", "Investor",
+    new { page, searchString = ViewBag.SearchString, firstShown = true, sortBy = ViewBag.SortBy, sortDestination = ViewBag.SortDestination }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "results" }))
+    </div>
+
+</div>

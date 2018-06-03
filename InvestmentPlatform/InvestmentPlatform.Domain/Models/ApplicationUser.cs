@@ -46,5 +46,7 @@ namespace InvestmentPlatform.Domain.Models
         public int? CurrencyId { get; set; }
 
         public Currency Currency { get; set; }
+
+        public DateTime DateCreated { get; set; }
     }
 }

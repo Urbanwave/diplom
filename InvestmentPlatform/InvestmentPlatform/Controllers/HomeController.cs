@@ -26,7 +26,9 @@ namespace InvestmentPlatform.Controllers
             var mainPageViewModel = new MainPageViewModel();
             var solutionViewModels = new List<SolutionViewModel>();
 
-            var solutions = solutionService.GetAllSolutions(1,int.MaxValue).OrderByDescending(x => x.Id).Take(3);
+            ViewBag.IsHomePage = true;
+
+            var solutions = solutionService.GetAllSolutions(1,int.MaxValue).OrderByDescending(x => x.DateCreated).Take(3);
 
             foreach (var solution in solutions)
             {

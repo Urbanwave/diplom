@@ -249,6 +249,8 @@ textarea {
     max-width: 280px;
     padding-left: 12px;
     padding-right: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
 }
 
 .checkboxes-block:focus {
@@ -259,7 +261,7 @@ textarea {
 .list-name-solution {
     display: inline-block;
     vertical-align: top;
-    width: 110px;
+    width: 140px;
 }
 
 .list-block-solution {
@@ -269,6 +271,7 @@ textarea {
 .block-text-solution {
     width: 60%;
     display: inline-block;
+    padding-right: 20px;
 }
 
 .image-solution {
@@ -310,6 +313,21 @@ textarea {
     height: 34px;
     width: 100%;
 }
+.content-on-carousel {
+    top: 40%;
+    position: absolute;
+    width: 100%;
+    color: white;
+    text-align: center;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+.sort-block {
+    height: 34px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 .pagination-block .pagination {
     display: block;
@@ -331,6 +349,7 @@ textarea {
     border: 1px solid #cccccc;
     border-radius: 4px;
     max-width: 280px;
+    cursor: pointer;
 }
 
 .profile-navigation-block {
@@ -373,6 +392,14 @@ textarea {
 .my-projects-block{
     display: inline-block;
     vertical-align: top;
+}
+
+.solution-sectros-block {
+    border: 2px solid;
+    padding: 5px 5px 0 5px;
+    border-radius: 4px;
+    border-color: #3D5975;
+    background-color: #f7f7f7;
 }
 
 @media (min-width: 768px) {

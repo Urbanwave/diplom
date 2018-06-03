@@ -164,7 +164,9 @@ namespace InvestmentPlatform.Controllers
         [AllowAnonymous]
         public ActionResult AuthorRegister()
         {
-            return View();
+            var authorRegisterViewModel = new AuthorRegisterViewModel();
+
+            return View(authorRegisterViewModel);
         }
 
         [HttpPost]
@@ -174,17 +176,18 @@ namespace InvestmentPlatform.Controllers
         {
             ValidateAuthorModel(model);
             ValidateImage(file);
+            var pictureName = string.Empty;
+
+            if (file != null)
+            {
+                pictureName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                file.SaveAs(path);
+                model.FileName = "../Content/Images/profile/" + pictureName;
+            }
+
             if (ModelState.IsValid)
             {
-                var pictureName = string.Empty;
-
-                if (file != null)
-                {
-                    pictureName = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
-                    file.SaveAs(path);
-                }
-
                 var user = new ApplicationUser {
                     UserName = model.Email,
                     FirstName = model.FirstName,
@@ -193,7 +196,8 @@ namespace InvestmentPlatform.Controllers
                     CityId = model.CityId,
                     LogoFileName = pictureName,
                     JobTitle = model.JobTitle,
-                    Website = model.Website
+                    Website = model.Website,
+                    DateCreated = DateTime.Now
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -207,7 +211,7 @@ namespace InvestmentPlatform.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Solutions", "Author");
                 }
                 AddErrors(result);
             }
@@ -223,17 +227,18 @@ namespace InvestmentPlatform.Controllers
         {
             ValidateInvestorModel(model);
             ValidateImage(file);
+            var pictureName = string.Empty;
+
+            if (file != null)
+            {
+                pictureName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                file.SaveAs(path);
+                model.FileName = "../Content/Images/profile/" + pictureName;
+            }
+
             if (ModelState.IsValid)
             {
-                var pictureName = string.Empty;
-
-                if (file != null)
-                {
-                    pictureName = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
-                    file.SaveAs(path);
-                }
-
                 var user = new ApplicationUser {
                     UserName = model.Email,
                     FirstName = model.FirstName,
@@ -246,6 +251,7 @@ namespace InvestmentPlatform.Controllers
                     Website = model.Website,
                     InvestmentSize = model.InvestmentSize,
                     CurrencyId = model.CurrencyId,
+                    DateCreated = DateTime.Now
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -261,7 +267,7 @@ namespace InvestmentPlatform.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("All", "Solution");
                 }
                 AddErrors(result);
             }

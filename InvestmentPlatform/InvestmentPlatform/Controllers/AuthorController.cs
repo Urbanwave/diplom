@@ -76,7 +76,7 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Author")]
         public ActionResult Solutions(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 6;
             var allSolutionViewModel = new AllSolutionsViewModel();
 
             allSolutionViewModel.Countries = locationService.GetAllCountries();
@@ -126,6 +126,7 @@ namespace InvestmentPlatform.Controllers
             if (user != null)
             {
                 MapRegisterAuthorViewModel(authorEditViewModel, user);
+                authorEditViewModel.FileName = "../Content/Images/profile/" + user.LogoFileName;
             }
 
             return View(authorEditViewModel);
@@ -137,17 +138,19 @@ namespace InvestmentPlatform.Controllers
         public ActionResult Edit(AuthorEditViewModel model, HttpPostedFileBase file)
         {
             ValidateAuthorModel(model);
+
+            var pictureName = string.Empty;
+
+            if (file != null)
+            {
+                pictureName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                file.SaveAs(path);
+                model.FileName = "../Content/Images/profile/" + pictureName;
+            }
+
             if (ModelState.IsValid)
             {
-                var pictureName = string.Empty;
-
-                if (file != null)
-                {
-                    pictureName = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
-                    file.SaveAs(path);
-                }
-
                 var userId = User.Identity.GetUserId();
                 var user = userService.GetUserById(userId);
 

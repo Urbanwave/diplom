@@ -4,6 +4,7 @@ using InvestmentPlatform.Application.ViewModels;
 using InvestmentPlatform.Domain.Models;
 using InvestmentPlatform.Models;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +60,7 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Investor")]
         public ActionResult FavoriteSolutions(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 6;
             var allSolutionViewModel = new AllSolutionsViewModel();
 
             allSolutionViewModel.Countries = locationService.GetAllCountries();
@@ -99,24 +100,74 @@ namespace InvestmentPlatform.Controllers
             return View(allSolutionViewModel);
         }
 
-
-        public ActionResult All(int page = 1)
+        public ActionResult All()
         {
-            int pageSize = 3;
             var allInvestorsViewModel = new AllInvestorsViewModel();
-            var investors = investorService.GetAllInvestors(page, pageSize);
-            var investorViewModels = new List<InvestorViewModel>();
 
-            var projectAmount = investorService.GetInvestorsCount();
+            allInvestorsViewModel.Countries = locationService.GetAllCountries().OrderBy(x => x.Name).ToList(); ;
+            allInvestorsViewModel.Cities = locationService.GetAllCities().OrderBy(x => x.Name).ToList();
+            allInvestorsViewModel.Industries = typeService.GetAllIndustries();
 
-            if (projectAmount % pageSize > 0)
+            return View(allInvestorsViewModel);
+        }
+
+        public ActionResult Filter(AllInvestorsViewModel model, string sortBy, string sortDestination,
+            string searchString = "", int page = 1, bool firstShown = false)
+        {
+            if (page == 0)
             {
-                allInvestorsViewModel.ProjectAmount = projectAmount / pageSize + 1;
+                page = 1;
+            }
+
+            ViewBag.SearchString = searchString;
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortDestination = sortDestination;
+
+            int pageSize = 6;
+
+            var countriesCities = locationService.GetCountriesCityIds(model.SelectedCountries);
+            model.SelectedCities = model.SelectedCities.Union(countriesCities).ToList();
+
+            var investors = investorService.GetAllInvestors(1, int.MaxValue).Where(x => x.CompanyName.Contains(searchString)
+            || x.CompanyDescription.Contains(searchString) || x.FirstName.Contains(searchString) || x.LastName.Contains(searchString));
+
+            if (model.SelectedCities.Count > 0)
+            {
+                investors = investors.Where(x => model.SelectedCities.Contains(x.CityId));
+            }
+
+            if (model.SelectedIndustries.Count > 0)
+            {
+                investors = investors.Where(x => x.Industries.Any(y => model.SelectedIndustries.Contains(y.Id)));
+            }
+
+            if (sortBy == "date")
+            {
+                if (sortDestination == "up")
+                {
+                    investors = investors.OrderBy(x => x.DateCreated);
+                }
+                else
+                {
+                    investors = investors.OrderByDescending(x => x.DateCreated);
+                }
             }
             else
+            if (sortBy == "investmentSize")
             {
-                allInvestorsViewModel.ProjectAmount = projectAmount / pageSize;
+                if (sortDestination == "up")
+                {
+                    investors = investors.OrderBy(x => x.InvestmentSize);
+                }
+                else
+                {
+                    investors = investors.OrderByDescending(x => x.InvestmentSize);
+                }
             }
+
+            ViewBag.InvestorsAmount = investors.Count();
+
+            var investorViewModels = new List<InvestorViewModel>();
 
             foreach (var investor in investors)
             {
@@ -127,9 +178,7 @@ namespace InvestmentPlatform.Controllers
                 investorViewModels.Add(investorViewModel);
             }
 
-            allInvestorsViewModel.InvestorViewModels = investorViewModels;
-
-            return View(allInvestorsViewModel);
+            return PartialView(investorViewModels.ToPagedList(page, pageSize));
         }
 
         [Authorize(Roles = "Investor")]
@@ -145,6 +194,7 @@ namespace InvestmentPlatform.Controllers
                 MapRegisterInvestorViewModel(investorViewModel, user);
                 investorViewModel.City.Country = locationService.GetCountryByCityId(user.CityId);
                 investorViewModel.InvestmentSectors = typeService.GetAllIndustries();
+                investorViewModel.FileName = "../Content/Images/profile/" + user.LogoFileName;
             }
 
             return View(investorViewModel);
@@ -156,17 +206,19 @@ namespace InvestmentPlatform.Controllers
         public ActionResult Edit(InvestorEditViewModel model, HttpPostedFileBase file)
         {
             ValidateInvestorModel(model);
-            if (ModelState.IsValid)
+
+            var pictureName = string.Empty;
+
+            if (file != null)
             {
-                var pictureName = string.Empty;
+                pictureName = Path.GetFileName(file.FileName);
+                string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
+                file.SaveAs(path);
+                model.FileName = "../Content/Images/profile/" + pictureName;
+            }
 
-                if (file != null)
-                {
-                    pictureName = Path.GetFileName(file.FileName);
-                    string path = Path.Combine(Server.MapPath("/Content/Images/profile"), pictureName);
-                    file.SaveAs(path);
-                }
-
+            if (ModelState.IsValid)
+            {    
                 var userId = User.Identity.GetUserId();
                 var user = userService.GetUserById(userId);
 
@@ -206,6 +258,8 @@ namespace InvestmentPlatform.Controllers
             investorViewModel.CompanyName = investor.CompanyName;
             investorViewModel.CompanyDescription = investor.CompanyDescription;
             investorViewModel.Industries = investor.Industries;
+            investorViewModel.Email = investor.Email;
+            investorViewModel.Website = investor.Website;
         }
 
         private void MapRegisterInvestorViewModel(InvestorEditViewModel investorRegisterViewModel, ApplicationUser investor)
@@ -224,6 +278,7 @@ namespace InvestmentPlatform.Controllers
             investorRegisterViewModel.CompanyName = investor.CompanyName;
             investorRegisterViewModel.CompanyDescription = investor.CompanyDescription;
             investorRegisterViewModel.InvestmentSize = investor.InvestmentSize;
+            investorRegisterViewModel.Email = investor.Email;
         }
 
         private void ValidateInvestorModel(InvestorEditViewModel model)

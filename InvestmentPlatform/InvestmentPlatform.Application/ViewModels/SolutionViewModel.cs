@@ -57,5 +57,9 @@ namespace InvestmentPlatform.Models
         public string FileName { get; set; }
 
         public bool IsFollowed { get; set; }
+
+        public string Email { get; set; }
+
+        public DateTime DateCreated { get; set; }
     }
 }

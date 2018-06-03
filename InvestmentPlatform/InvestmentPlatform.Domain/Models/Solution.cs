@@ -27,6 +27,8 @@ namespace InvestmentPlatform.Domain.Models
 
         public string UniqueInfo { get; set; }
 
+        public DateTime DateCreated { get; set; }
+
         [ForeignKey("Currency")]
         public int CurrencyId { get; set; }
 

@@ -30,13 +30,53 @@
 
 <div class="block-text-solution">
     <p class="location-solution">
-        @Model.City.Country.Name, @Model.City.Name
+        <i class="fa fa-map-marker" style="margin-right: 5px;"></i>@Model.City.Country.Name, @Model.City.Name
     </p>
 
     <div class="font-solution">
         <p>
             <span class="bold-font">Description:</span>
             @Model.SolutionDescription
+        </p>
+
+        <div class="solution-sectros-block ">
+            <div>
+                <p class="list-name-solution">
+                    <span class="bold-font">Kinds of solution:</span>
+                </p>
+                <div class="list-block-solution">
+                    @foreach (var solutionKind in Model.SolutionTypes)
+                    {
+                        <p>
+                            @solutionKind.Name
+                        </p>
+                    }
+                </div>
+            </div>
+
+            <div>
+                <p class="list-name-solution">
+                    <span class="bold-font">Industries:</span>
+                </p>
+                <div class="list-block-solution">
+                    @foreach (var industry in Model.Industries)
+                    {
+                        <p>
+                            @industry.Name
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+        
+        <p>
+            <span class="bold-font">Project implementation status:</span>
+            @Model.ImplementationStatus.Name
+        </p>
+
+        <p>
+            <span class="bold-font">Investment size:</span>
+            @Model.InvestmentSize @Model.Currency.Name            
         </p>
 
         @if (!string.IsNullOrEmpty(Model.UniqueInfo))
@@ -47,46 +87,17 @@
             </p>
         }
 
-        <div>
-            <p class="list-name-solution">
-                <span class="bold-font">Kinds of solution:</span>
-            </p>
-            <div class="list-block-solution">
-                @foreach (var solutionKind in Model.SolutionTypes)
-                {
-                    <p>
-                        @solutionKind.Name
-                    </p>
-                }
-            </div>
-        </div>
-
-        <div>
-            <p class="list-name-solution">
-                <span class="bold-font">Industries:</span>
-            </p>
-            <div class="list-block-solution">
-                @foreach (var industry in Model.Industries)
-                {
-                    <p>
-                        @industry.Name
-                    </p>
-                }
-            </div>
-        </div>
-
         <p>
-            <span class="bold-font">Project implementation status:</span>
-            @Model.ImplementationStatus.Name
-        </p>
-
-        <p>
-            <span class="bold-font">Investment size:</span>
-            @Model.InvestmentSize @Model.Currency.Name            
+            <span class="bold-font">Email for contact:</span>
+            @Model.Email
         </p>
     </div>
 </div>
 
 <div class="image-solution">
+    <p class="font-solution" style="float: right;">
+        <span class="bold-font">Date created:</span>
+        @Model.DateCreated.ToString("MM.dd.yyyy")
+    </p>
     <img src="~/Content/images/profile/@Model.FileName">
 </div>
