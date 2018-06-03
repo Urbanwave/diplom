@@ -7,17 +7,38 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @if(User.IsInRole("Investor"))
+            @if (User.IsInRole("Investor"))
             {
-                <a href="~/Investor/Index">Your profile</a>
+                if (ViewBag.IsProfilePage != null && ViewBag.IsProfilePage)
+                {
+                    <a href="~/Investor/Index" style="color: rgba(237, 205, 31, 1) !important">Your profile</a>
+                }
+                else
+                {
+                    <a href="~/Investor/Index">Your profile</a>
+                }
             }
             @if (User.IsInRole("Author"))
             {
-                <a href="~/Author/Index">Your profile</a>
+                if (ViewBag.IsProfilePage != null && ViewBag.IsProfilePage)
+                {
+                    <a href="~/Author/Index" style="color: rgba(237, 205, 31, 1) !important">Your profile</a>
+                }
+                else
+                {
+                    <a href="~/Author/Index">Your profile</a>
+                }
             }
             @if (User.IsInRole("Admin"))
             {
-                <a href="~/Admin/Solutions">Manage site</a>
+                if (ViewBag.IsProfilePage != null && ViewBag.IsProfilePage)
+                {
+                    <a href="~/Admin/Solutions" style="color: rgba(237, 205, 31, 1) !important">Manage site</a>
+                }
+                else
+                {
+                    <a href="~/Admin/Solutions">Manage site</a>
+                }
             }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

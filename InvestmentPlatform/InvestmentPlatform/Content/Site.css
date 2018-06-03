@@ -62,7 +62,7 @@ textarea {
     margin: unset !important;
 }
 .home-page-carousel {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .home-page-solutions-block {
@@ -405,6 +405,10 @@ textarea {
 @media (min-width: 768px) {
     .my-projects-block {
         width: 33%;
+    }
+
+    .navbar-nav > li > a {
+        padding-top: 18px;
     }
 
     .inv-size-input{

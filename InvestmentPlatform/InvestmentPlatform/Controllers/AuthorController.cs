@@ -37,6 +37,8 @@ namespace InvestmentPlatform.Controllers
         {
             var authorViewModel = new AuthorEditViewModel();
 
+            ViewBag.IsProfilePage = true;
+
             var userId = User.Identity.GetUserId();
 
             var author = authorService.GetAuthorById(userId);
@@ -76,6 +78,8 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Author")]
         public ActionResult Solutions(int page = 1)
         {
+            ViewBag.IsProfilePage = true;
+
             int pageSize = 6;
             var allSolutionViewModel = new AllSolutionsViewModel();
 
@@ -120,6 +124,8 @@ namespace InvestmentPlatform.Controllers
         {
             var authorEditViewModel = new AuthorEditViewModel();
 
+            ViewBag.IsProfilePage = true;
+
             var userId = User.Identity.GetUserId();
             var user = userService.GetUserById(userId);
 
@@ -156,7 +162,7 @@ namespace InvestmentPlatform.Controllers
 
                 userService.UpdateUser(model, user, pictureName);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Author");
             }
 
             return View("Edit", model);

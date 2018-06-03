@@ -141,11 +141,11 @@
         $('#results').load('/Solution/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val());
 
         $("#sortBy").change(function () {
-            $('#results').load('/Solution/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+            $('#results').load('/Solution/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
         });
 
         $("#sortDestination").change(function () {
-            $('#results').load('/Solution/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+            $('#results').load('/Solution/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
         });
 
         $("#cities-dropdown").click(function () {

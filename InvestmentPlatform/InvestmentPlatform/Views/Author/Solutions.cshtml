@@ -23,6 +23,12 @@
     <div style="height: 40px">
         <a href="/Solution/Add" class="custom-button" style="float:right">+ Add Solution</a>
     </div>
+
+    @if(Model.SolutionViewModels.Count() == 0)
+    {
+        <div style="text-align: center; font-size: 16px;">You have no solutions, please click "Add solution" to add your first solution</div>
+    }
+
     @foreach (var solution in Model.SolutionViewModels)
     {
         <div class="my-projects-block">

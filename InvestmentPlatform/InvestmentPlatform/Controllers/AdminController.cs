@@ -26,6 +26,8 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Solutions()
         {
+            ViewBag.IsProfilePage = true;
+
             var allSolutionViewModel = new Application.ViewModels.AllSolutionsViewModel();
 
             var projectAmount = solutionService.GetSolutionsAmount();
@@ -51,6 +53,8 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Authors()
         {
+            ViewBag.IsProfilePage = true;
+
             var allAuthorsViewModel = new AllAuthorsViewModel();
             var authors = authorService.GetAllAuthors(1, int.MaxValue);
             var authorViewModels = new List<AuthorEditViewModel>();
@@ -75,6 +79,8 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Investors()
         {
+            ViewBag.IsProfilePage = true;
+
             var allInvestorsViewModel = new AllInvestorsViewModel();
             var investors = investorService.GetAllInvestors(1, int.MaxValue);
             var investorViewModels = new List<InvestorViewModel>();

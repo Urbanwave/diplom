@@ -74,11 +74,11 @@ namespace InvestmentPlatform.Controllers
 
             if (model != null && !firstShown)
             {
-                TempData["Filter"] = model;
+                Session["Filter"] = model;
             } else
-            if (TempData["Filter"] != null)
+            if (Session["Filter"] != null)
             {
-                model = (AllSolutionsViewModel)TempData["Filter"];
+                model = (AllSolutionsViewModel)Session["Filter"];
             }
 
             int pageSize = 6;
@@ -97,8 +97,9 @@ namespace InvestmentPlatform.Controllers
             model.SelectedCities = model.SelectedCities.Union(countriesCities).ToList();
 
             var solutions = solutionService.GetAllSolutions(1, int.MaxValue).Where(x => (x.SolutionDescription.Contains(searchString)
-            || x.Title.Contains(searchString) || x.Currency.Name.Contains(searchString))
-            && x.InvestmentSize > model.FromInvestmentSize && x.InvestmentSize < model.ToInvestmentSize);
+            || x.Title.Contains(searchString) || x.Currency.Name.Contains(searchString) || x.City.Name.Contains(searchString)
+            || x.InvestmentSize.ToString().Contains(searchString))        
+            && x.InvestmentSize >= model.FromInvestmentSize && x.InvestmentSize <= model.ToInvestmentSize);
             
             if(model.SelectedCities.Count > 0)
             {
@@ -163,11 +164,13 @@ namespace InvestmentPlatform.Controllers
         {
             var allSolutionViewModel = new AllSolutionsViewModel();
 
+            ViewBag.IsSolutionsPage = true;
+
             allSolutionViewModel.Countries = locationService.GetAllCountries().OrderBy(x => x.Name).ToList(); ;
             allSolutionViewModel.Cities = locationService.GetAllCities().OrderBy(x => x.Name).ToList();
-            allSolutionViewModel.Industries = typeService.GetAllIndustries();
-            allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses();
-            allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes();
+            allSolutionViewModel.Industries = typeService.GetAllIndustries().OrderBy(x => x.Name).ToList();
+            allSolutionViewModel.ImplementationStatuses = typeService.GetAllImplementationStatuses().OrderBy(x => x.Name).ToList();
+            allSolutionViewModel.SolutionTypes = typeService.GetAllSolutionTypes().OrderBy(x => x.Name).ToList();
 
             return View(allSolutionViewModel);
         }
@@ -349,7 +352,7 @@ namespace InvestmentPlatform.Controllers
         private void MapSolutionViewModel(SolutionViewModel solutionViewModel, Solution solution)
         {
             solutionViewModel.Currency = solution.Currency;
-            solutionViewModel.FileName = solution.LogoFileName;
+            solutionViewModel.FileName = !string.IsNullOrEmpty(solution.LogoFileName) ? solution.LogoFileName : "solutiondefault.png";
             solutionViewModel.Id = solution.Id;
             solutionViewModel.City = solution.City;
             solutionViewModel.CityId = solution.CityId;

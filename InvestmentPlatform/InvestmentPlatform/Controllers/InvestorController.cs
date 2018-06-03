@@ -36,6 +36,8 @@ namespace InvestmentPlatform.Controllers
         {
             var investorViewModel = new InvestorViewModel();
 
+            ViewBag.IsProfilePage = true;
+
             var userId = User.Identity.GetUserId();
 
             var investor = investorService.GetInvestorById(userId);
@@ -60,6 +62,8 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Investor")]
         public ActionResult FavoriteSolutions(int page = 1)
         {
+            ViewBag.IsProfilePage = true;
+
             int pageSize = 6;
             var allSolutionViewModel = new AllSolutionsViewModel();
 
@@ -104,9 +108,11 @@ namespace InvestmentPlatform.Controllers
         {
             var allInvestorsViewModel = new AllInvestorsViewModel();
 
+            ViewBag.IsInvestorsPage = true;
+
             allInvestorsViewModel.Countries = locationService.GetAllCountries().OrderBy(x => x.Name).ToList(); ;
             allInvestorsViewModel.Cities = locationService.GetAllCities().OrderBy(x => x.Name).ToList();
-            allInvestorsViewModel.Industries = typeService.GetAllIndustries();
+            allInvestorsViewModel.Industries = typeService.GetAllIndustries().OrderBy(x => x.Name).ToList();
 
             return View(allInvestorsViewModel);
         }
@@ -123,13 +129,24 @@ namespace InvestmentPlatform.Controllers
             ViewBag.SortBy = sortBy;
             ViewBag.SortDestination = sortDestination;
 
+            if (model != null && !firstShown)
+            {
+                Session["FilterInvestor"] = model;
+            }
+            else
+            if (Session["FilterInvestor"] != null)
+            {
+                model = (AllInvestorsViewModel)Session["FilterInvestor"];
+            }
+
             int pageSize = 6;
 
             var countriesCities = locationService.GetCountriesCityIds(model.SelectedCountries);
             model.SelectedCities = model.SelectedCities.Union(countriesCities).ToList();
 
             var investors = investorService.GetAllInvestors(1, int.MaxValue).Where(x => x.CompanyName.Contains(searchString)
-            || x.CompanyDescription.Contains(searchString) || x.FirstName.Contains(searchString) || x.LastName.Contains(searchString));
+            || x.CompanyDescription.Contains(searchString) || x.FirstName.Contains(searchString) || x.LastName.Contains(searchString)
+            || x.City.Name.Contains(searchString) || x.InvestmentSize.ToString().Contains(searchString));
 
             if (model.SelectedCities.Count > 0)
             {
@@ -184,6 +201,8 @@ namespace InvestmentPlatform.Controllers
         [Authorize(Roles = "Investor")]
         public ActionResult Edit()
         {
+            ViewBag.IsProfilePage = true;
+
             var investorViewModel = new InvestorEditViewModel();
 
             var userId = User.Identity.GetUserId();

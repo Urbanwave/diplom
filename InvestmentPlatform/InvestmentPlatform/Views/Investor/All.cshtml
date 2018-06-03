@@ -136,11 +136,11 @@
         $('#results').load('/Investor/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val());
 
         $("#sortBy").change(function () {
-            $('#results').load('/Investor/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+            $('#results').load('/Investor/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
         });
 
         $("#sortDestination").change(function () {
-            $('#results').load('/Investor/Filter?firstShown=False&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
+            $('#results').load('/Investor/Filter?firstShown=True&sortBy=' + $("#sortBy").val() + '&sortDestination=' + $("#sortDestination").val() + '&searchString=' + $("#searchString").val());
         });
 
         $("#cities-dropdown").click(function () {

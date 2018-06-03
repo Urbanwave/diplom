@@ -16,7 +16,7 @@
             <a href="~/Solution/View?id=@solution.Id">
                 <div class="home-page-solutions">
                     <div class="home-page-solutions-image">
-                        <img src="~/Content/images/profile/@solution.FileName">
+                        <img style="max-height: 220px;" src="~/Content/images/profile/@solution.FileName">
                     </div>
 
                     <div class="home-page-solutions-description">
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="home-page-statistic">
+        <div style="border-left: 2px solid white;" class="home-page-statistic">
             <div class="home-page-statistic-number">
                 @Model.AuthorsAmount
             </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="home-page-statistic">
+        <div  style="border-right: 2px solid white;border-left: 2px solid white;" class="home-page-statistic">
             <div class="home-page-statistic-number">
                 @Model.InvestorsAmount
             </div>

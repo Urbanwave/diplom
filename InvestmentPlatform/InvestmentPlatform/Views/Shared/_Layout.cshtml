@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top navbar-style">
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-style" style="border-width: 0 0 0">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,11 +22,31 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse navbar-style-width">
+            <div class="navbar-collapse collapse navbar-style-width"  style="padding-bottom: 0px !important; padding-top: 0px !important;">
                 <ul class="nav navbar-nav">
-                    <li class="navbar-style-header">@Html.ActionLink("INVESTING PLATFORM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand navbar-logo" })</li>
-                    <li>@Html.ActionLink("Solutions", "All", "Solution")</li>
-                    <li>@Html.ActionLink("Investors", "All", "Investor")</li>
+                    <li class="navbar-style-header" >
+                        <a style="padding-bottom: 10px; padding-top: 10px" class="navbar-brand navbar-logo" href="/"><img style="height: 40px;" src="~/Content/images/profile/logo.png"/>INVESTING PLATFORM</a>
+                    </li>
+                    <li>
+                        @if (ViewBag.IsSolutionsPage != null && ViewBag.IsSolutionsPage)
+                        {
+                            <a style="color: rgba(237, 205, 31, 1) !important" href="/Solution/All">Solutions</a>
+                        }
+                        else
+                        {
+                            <a href="/Solution/All">Solutions</a>
+                        }
+                    </li>
+                    <li>
+                        @if (ViewBag.IsInvestorsPage != null && ViewBag.IsInvestorsPage)
+                        {
+                            <a style="color: rgba(237, 205, 31, 1) !important" href="/Investor/All">Investors</a>
+                        }
+                        else
+                        {
+                            <a href="/Investor/All">Investors</a>
+                        }
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -70,7 +90,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year Investing Platform. All rights reserved.</p>
         </footer>
     </div>
 </body>
