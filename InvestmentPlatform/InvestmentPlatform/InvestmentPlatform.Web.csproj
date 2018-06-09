@@ -279,6 +279,7 @@
     <Content Include="Content\images\profile\DSC_3991-2.jpg" />
     <Content Include="Content\images\profile\investor.jpg" />
     <Content Include="Content\images\profile\kQOUr2G_zOA.jpg" />
+    <Content Include="Content\images\profile\logo.png" />
     <Content Include="Content\images\profile\ny3.jpg" />
     <Content Include="Content\images\profile\P70611-152919.jpg" />
     <Content Include="Content\images\profile\P70611-165754.jpg" />
@@ -286,6 +287,7 @@
     <Content Include="Content\images\profile\P70611-165812.jpg" />
     <Content Include="Content\images\profile\P70611-165849.jpg" />
     <Content Include="Content\images\profile\P70611-165859.jpg" />
+    <Content Include="Content\images\profile\solutiondefault.png" />
     <Content Include="Content\images\profile\test123.jpg" />
     <Content Include="Content\images\signup\author.jpg" />
     <Content Include="Content\images\signup\investor.jpg" />

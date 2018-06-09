@@ -119,6 +119,11 @@ textarea {
     position: relative;
 }
 
+#loadedImage {
+    width: 280px;
+    margin-top: 10px;
+}
+
 .register-block-link span {
     position: absolute;
     color: white;
@@ -180,6 +185,11 @@ textarea {
 .registration-button-block input:hover {
     background-color: rgba(237, 205, 31, 1);
     color: #3D5975;
+}
+
+.find-button {
+    display: inline-block;
+    width: calc(100% - 320px);
 }
 
 .custom-button {
@@ -321,6 +331,15 @@ textarea {
     text-align: center;
     transform: translateY(-50%);
     z-index: 5;
+}
+
+.main-page-left-stat {
+    border-left: 2px solid white;
+}
+
+.main-page-right-stat {
+    border-right: 2px solid white;
+    border-left: 2px solid white;
 }
 
 .sort-block {
@@ -565,10 +584,112 @@ textarea {
 
 @media (max-width: 768px) {
 
+    .filter-block {
+        width: 100% !important;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+
+    .search-block{
+        width: 100% !important;
+    }
+
+    .sectors-dropdown {
+        width: 100% !important;
+    }
+
+    .profile-navigation-block{
+        width: 100%;
+    }
+
+    .profile-navigation-block a{
+        width: 100%;
+    } 
+    
+    #currency {
+        margin-top: 10px;
+    } 
+    
+    .logo-li {
+        height: 60px;
+    }
+
+    .find-button {
+        width: 100%;
+    }
+
+    .sort-block {
+        height: auto;
+    }
+    
+    .home-page-carousel {
+        margin-top: 0px !important;
+    }
+
+    .pagination-block .pagination {
+        width: auto !important;
+    }
+
+    .checkbox {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+
+    #sortDestination {
+        margin-top: 10px;
+    }
+
+    #loadedImage {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .block-text-solution {
+        width: 100% !important;
+        padding-right: 0px !important;
+    }
+
+    .form-group {
+        margin-bottom: 0px;
+    } 
+    
+    .image-solution {
+        width: 100% !important;
+    } 
+    
+    .content-on-carousel {
+        top: 20% !important;
+    }
+
+    .content-on-carousel h1{
+       font-size: 30px !important;
+    }
+
+    .main-page-left-stat {
+        border-top: 2px solid white;
+        border-left: 0px !important;
+    }
+
+    .main-page-right-stat {
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+        border-right: 0px !important;
+        border-left: 0px !important;
+    }
+
     .my-projects-block {
         width: 100%;
     }
 
+    .add-solution-btn {
+        width: 100% !important;
+    }
+
+    #UniqueInfo {
+        margin-bottom: 20px;
+    } 
+    
     .follow-star {
         display: inline-block;
         float: right;
